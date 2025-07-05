@@ -339,15 +339,26 @@ static NSString *const SUUpdateAlertTouchBarIdentifier = @"" SPARKLE_BUNDLE_IDEN
 {
     NSWindow *window = self.window;
     
-    _releaseNotesContainerBoxView.boxType = NSBoxCustom;
-    _releaseNotesContainerBoxView.cornerRadius = 6.0;
-    if (@available(macOS 10.14, *)) {
-        _releaseNotesContainerBoxView.borderColor = NSColor.separatorColor;
-    } else {
-        _releaseNotesContainerBoxView.borderColor = [NSColor colorWithCalibratedWhite:0.84 alpha:1.0];
+    // Customize custom NSBox
+    {
+        CGFloat boxCornerRadius = 6.0;
+        CGFloat boxBorderWidth = 1.0;
+        
+        _releaseNotesContainerBoxView.boxType = NSBoxCustom;
+        _releaseNotesContainerBoxView.cornerRadius = boxCornerRadius;
+        if (@available(macOS 10.14, *)) {
+            _releaseNotesContainerBoxView.borderColor = NSColor.separatorColor;
+        } else {
+            _releaseNotesContainerBoxView.borderColor = [NSColor colorWithCalibratedWhite:0.84 alpha:1.0];
+        }
+        _releaseNotesContainerBoxView.borderWidth = boxBorderWidth;
+        _releaseNotesContainerBoxView.fillColor = NSColor.textBackgroundColor;
+        
+        // Needed so we don't clip the corners if the CSS uses a custom background
+        _releaseNotesContainerBoxView.contentView.wantsLayer = YES;
+        _releaseNotesContainerBoxView.contentView.layer.masksToBounds = YES;
+        _releaseNotesContainerBoxView.contentView.layer.cornerRadius = boxCornerRadius - boxBorderWidth;
     }
-    _releaseNotesContainerBoxView.borderWidth = 1.0;
-    _releaseNotesContainerBoxView.fillColor = NSColor.textBackgroundColor;
     
     BOOL showReleaseNotes = [self showsReleaseNotes];
     if (showReleaseNotes) {
