@@ -30,7 +30,7 @@
             <rect key="screenRect" x="0.0" y="0.0" width="1470" height="918"/>
             <value key="minSize" type="size" width="550" height="150"/>
             <view key="contentView" misplaced="YES" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="668" height="554"/>
+                <rect key="frame" x="0.0" y="0.0" width="660" height="572"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="61v-5k-OXp">
@@ -88,7 +88,7 @@
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="tBJ-52-VdS" userLabel="Release Notes View">
                                 <rect key="frame" x="24" y="84" width="620" height="257"/>
                                 <subviews>
-                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ouB-pw-pFe" userLabel="Release Notes Label">
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ouB-pw-pFe" userLabel="Release Notes:">
                                         <rect key="frame" x="-2" y="243" width="83" height="14"/>
                                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="Release Notes:" id="XhO-4o-ZBN">
                                             <font key="font" metaFont="smallSystem"/>
@@ -114,7 +114,6 @@
                                     <constraint firstItem="ikY-gb-bgB" firstAttribute="top" secondItem="ouB-pw-pFe" secondAttribute="bottom" constant="8" id="kKs-n1-CbI"/>
                                     <constraint firstItem="ikY-gb-bgB" firstAttribute="leading" secondItem="tBJ-52-VdS" secondAttribute="leading" id="lQG-rd-lBX"/>
                                     <constraint firstItem="ouB-pw-pFe" firstAttribute="top" secondItem="tBJ-52-VdS" secondAttribute="top" id="o2K-hW-SO5"/>
-                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ouB-pw-pFe" secondAttribute="trailing" constant="20" symbolic="YES" id="rMz-Td-ajD"/>
                                     <constraint firstAttribute="trailing" secondItem="ikY-gb-bgB" secondAttribute="trailing" id="wBy-PR-25G"/>
                                 </constraints>
                             </customView>
