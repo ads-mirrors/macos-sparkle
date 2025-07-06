@@ -30,7 +30,7 @@
             <rect key="screenRect" x="0.0" y="0.0" width="1470" height="918"/>
             <value key="minSize" type="size" width="550" height="150"/>
             <view key="contentView" misplaced="YES" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="668" height="554"/>
+                <rect key="frame" x="0.0" y="0.0" width="668" height="555"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="61v-5k-OXp">
@@ -122,6 +122,7 @@
                                     </box>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ouB-pw-pFe" secondAttribute="trailing" constant="20" symbolic="YES" id="NxN-EA-pkO"/>
                                     <constraint firstItem="ouB-pw-pFe" firstAttribute="leading" secondItem="tBJ-52-VdS" secondAttribute="leading" id="Ohu-Ux-wsv"/>
                                     <constraint firstAttribute="bottom" secondItem="ikY-gb-bgB" secondAttribute="bottom" id="bns-hc-yFs"/>
                                     <constraint firstItem="ikY-gb-bgB" firstAttribute="top" secondItem="ouB-pw-pFe" secondAttribute="bottom" constant="8" id="kKs-n1-CbI"/>
