@@ -51,7 +51,9 @@ static NSString *const SUUpdateAlertTouchBarIdentifier = @"" SPARKLE_BUNDLE_IDEN
     IBOutlet NSButton *_laterButton;
     IBOutlet NSButton *_skipButton;
     IBOutlet NSView *_releaseNotesContainerView;
-    IBOutlet NSBox *_releaseNotesContainerBoxView;
+    IBOutlet NSBox *_releaseNotesBoxView;
+    IBOutlet NSView *_releaseNotesContentView;
+    IBOutlet NSTextField *_releaseNotesLabel;
     IBOutlet NSButton *_automaticallyInstallUpdatesButton;
     
     void (^_didBecomeKeyBlock)(void);
@@ -156,12 +158,12 @@ static NSString *const SUUpdateAlertTouchBarIdentifier = @"" SPARKLE_BUNDLE_IDEN
     _releaseNotesSpinner.controlSize = NSControlSizeRegular;
     [_releaseNotesSpinner setStyle:NSProgressIndicatorStyleSpinning];
     
-    [_releaseNotesContainerView addSubview:_releaseNotesSpinner];
+    [_releaseNotesContentView addSubview:_releaseNotesSpinner];
     
     _releaseNotesSpinner.translatesAutoresizingMaskIntoConstraints = NO;
     [NSLayoutConstraint activateConstraints:@[
-        [_releaseNotesSpinner.centerXAnchor constraintEqualToAnchor:_releaseNotesContainerView.centerXAnchor],
-        [_releaseNotesSpinner.centerYAnchor constraintEqualToAnchor:_releaseNotesContainerView.centerYAnchor]
+        [_releaseNotesSpinner.centerXAnchor constraintEqualToAnchor:_releaseNotesContentView.centerXAnchor],
+        [_releaseNotesSpinner.centerYAnchor constraintEqualToAnchor:_releaseNotesContentView.centerYAnchor]
     ]];
     
     _releaseNotesSpinner.displayedWhenStopped = NO;
@@ -322,9 +324,9 @@ static NSString *const SUUpdateAlertTouchBarIdentifier = @"" SPARKLE_BUNDLE_IDEN
     }
     
     assert(_releaseNotesSpinner != nil);
-    [_releaseNotesContainerView addSubview:_releaseNotesView.view positioned:NSWindowBelow relativeTo:_releaseNotesSpinner];
+    [_releaseNotesContentView addSubview:_releaseNotesView.view positioned:NSWindowBelow relativeTo:_releaseNotesSpinner];
     
-    _releaseNotesView.view.frame = _releaseNotesContainerView.bounds;
+    _releaseNotesView.view.frame = _releaseNotesContentView.bounds;
     _releaseNotesView.view.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
     
     if (@available(macOS 10.14, *)) {
@@ -339,25 +341,30 @@ static NSString *const SUUpdateAlertTouchBarIdentifier = @"" SPARKLE_BUNDLE_IDEN
 {
     NSWindow *window = self.window;
     
+#if SPARKLE_COPY_LOCALIZATIONS
+    NSBundle *sparkleBundle = SUSparkleBundle();
+#endif
+    _releaseNotesLabel.stringValue = SULocalizedStringFromTableInBundle(@"Release Notes:", SPARKLE_TABLE, SUSparkleBundle(), @"");
+    
     // Customize custom NSBox
     {
         CGFloat boxCornerRadius = 6.0;
         CGFloat boxBorderWidth = 1.0;
         
-        _releaseNotesContainerBoxView.boxType = NSBoxCustom;
-        _releaseNotesContainerBoxView.cornerRadius = boxCornerRadius;
+        _releaseNotesBoxView.boxType = NSBoxCustom;
+        _releaseNotesBoxView.cornerRadius = boxCornerRadius;
         if (@available(macOS 10.14, *)) {
-            _releaseNotesContainerBoxView.borderColor = NSColor.separatorColor;
+            _releaseNotesBoxView.borderColor = NSColor.separatorColor;
         } else {
-            _releaseNotesContainerBoxView.borderColor = [NSColor colorWithCalibratedWhite:0.84 alpha:1.0];
+            _releaseNotesBoxView.borderColor = [NSColor colorWithCalibratedWhite:0.84 alpha:1.0];
         }
-        _releaseNotesContainerBoxView.borderWidth = boxBorderWidth;
-        _releaseNotesContainerBoxView.fillColor = NSColor.textBackgroundColor;
+        _releaseNotesBoxView.borderWidth = boxBorderWidth;
+        _releaseNotesBoxView.fillColor = NSColor.textBackgroundColor;
         
         // Needed so we don't clip the corners if the CSS uses a custom background
-        _releaseNotesContainerBoxView.contentView.wantsLayer = YES;
-        _releaseNotesContainerBoxView.contentView.layer.masksToBounds = YES;
-        _releaseNotesContainerBoxView.contentView.layer.cornerRadius = boxCornerRadius - boxBorderWidth;
+        _releaseNotesBoxView.contentView.wantsLayer = YES;
+        _releaseNotesBoxView.contentView.layer.masksToBounds = YES;
+        _releaseNotesBoxView.contentView.layer.cornerRadius = boxCornerRadius - boxBorderWidth;
     }
     
     BOOL showReleaseNotes = [self showsReleaseNotes];
@@ -370,7 +377,7 @@ static NSString *const SUUpdateAlertTouchBarIdentifier = @"" SPARKLE_BUNDLE_IDEN
     _windowLoadedAndShowsReleaseNotes = showReleaseNotes;
 
     if (_updateItem.informationOnlyUpdate) {
-        [_installButton setTitle:SULocalizedStringFromTableInBundle(@"Learn More…", SPARKLE_TABLE, SUSparkleBundle(), @"Alternate title for 'Install Update' button when there's no download in RSS feed.")];
+        [_installButton setTitle:SULocalizedStringFromTableInBundle(@"Learn More…", SPARKLE_TABLE, sparkleBundle, @"Alternate title for 'Install Update' button when there's no download in RSS feed.")];
         [_installButton setAction:@selector(openInfoURL:)];
     }
 
@@ -379,7 +386,7 @@ static NSString *const SUUpdateAlertTouchBarIdentifier = @"" SPARKLE_BUNDLE_IDEN
     if (showReleaseNotes) {
         [self displayReleaseNotesSpinner];
     } else {
-        _releaseNotesContainerBoxView.hidden = YES;
+        _releaseNotesContainerView.hidden = YES;
     }
     
     // NOTE: The code below for deciding what buttons to hide is complex! Due to array of feature configurations :)
@@ -389,10 +396,6 @@ static NSString *const SUUpdateAlertTouchBarIdentifier = @"" SPARKLE_BUNDLE_IDEN
     }
     
     if (_state.stage == SPUUserUpdateStageInstalling) {
-#if SPARKLE_COPY_LOCALIZATIONS
-        NSBundle *sparkleBundle = SUSparkleBundle();
-#endif
-        
         // We're going to be relaunching pretty instantaneously
         _installButton.title = SULocalizedStringFromTableInBundle(@"Install and Relaunch", SPARKLE_TABLE, sparkleBundle, nil);
         

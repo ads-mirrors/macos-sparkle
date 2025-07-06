@@ -151,3 +151,5 @@
 /* No comment provided by engineer. */
 "Your macOS version is too old" = "Vaše verze macOS je příliš stará";
 
+/* Class = "NSTextFieldCell"; title = "Release Notes:"; ObjectID = "170"; */
+"Release Notes:" = "Poznámky k vydání:";

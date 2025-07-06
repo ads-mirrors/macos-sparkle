@@ -147,3 +147,6 @@
 
 /* No comment provided by engineer. */
 "Your macOS version is too old" = "A versão do macOS é antiga demais";
+
+/* Class = "NSTextFieldCell"; title = "Release Notes:"; ObjectID = "170"; */
+"Release Notes:" = "Notas do Lançamento:";
