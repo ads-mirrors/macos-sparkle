@@ -171,6 +171,7 @@ Gw
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="222" constant="90" id="8FZ-lB-M5G"/>
                                         </constraints>
+                                        <accessibility identifier="SPUUserUpdateChoiceDismiss"/>
                                         <connections>
                                             <action selector="remindMeLater:" target="-2" id="108-L6-c2e"/>
                                         </connections>
@@ -187,6 +188,7 @@ DQ
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="222" constant="120" id="Gsu-Ko-2TJ"/>
                                         </constraints>
+                                        <accessibility identifier="SPUUserUpdateChoiceInstall"/>
                                         <connections>
                                             <action selector="installUpdate:" target="-2" id="8TR-Ao-zjt"/>
                                         </connections>
@@ -197,6 +199,7 @@ DQ
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
+                                        <accessibility identifier="SPUUserUpdateChoiceSkip"/>
                                         <connections>
                                             <action selector="skipThisVersion:" target="-2" id="cXW-0s-yIT"/>
                                         </connections>

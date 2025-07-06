@@ -104,9 +104,10 @@ static NSString *const SUStatusControllerTouchBarIdentifier = @"" SPARKLE_BUNDLE
     self.statusText = aStatusText;
 }
 
-- (void)setButtonTitle:(NSString *)aButtonTitle target:(id)target action:(SEL)action isDefault:(BOOL)isDefault
+- (void)setButtonTitle:(NSString *)aButtonTitle target:(id)target action:(SEL)action isDefault:(BOOL)isDefault accessibilityIdentifier:(NSString *)accessibilityIdentifier
 {
     self.buttonTitle = aButtonTitle;
+    _actionButton.accessibilityIdentifier = [accessibilityIdentifier copy];
 
     [self window];
     [_actionButton sizeToFit];
