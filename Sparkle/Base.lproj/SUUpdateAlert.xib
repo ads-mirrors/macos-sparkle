@@ -68,7 +68,7 @@
                                             </textField>
                                             <textField focusRingType="none" verticalHuggingPriority="999" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" preferredMaxLayoutWidth="490" translatesAutoresizingMaskIntoConstraints="NO" id="WdU-eY-Ta9" userLabel="Question text field">
                                                 <rect key="frame" x="-2" y="0.0" width="508" height="14"/>
-                                                <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Question" usesSingleLineMode="YES" id="Jsa-P1-mWz">
+                                                <textFieldCell key="cell" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Question" id="Jsa-P1-mWz">
                                                     <font key="font" metaFont="smallSystem"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
