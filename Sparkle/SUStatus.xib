@@ -24,11 +24,11 @@
             <rect key="screenRect" x="0.0" y="0.0" width="1470" height="918"/>
             <value key="minSize" type="size" width="213" height="107"/>
             <view key="contentView" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="400" height="111"/>
+                <rect key="frame" x="0.0" y="0.0" width="400" height="113"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView translatesAutoresizingMaskIntoConstraints="NO" id="7">
-                        <rect key="frame" x="24" y="43" width="64" height="64"/>
+                        <rect key="frame" x="20" y="45" width="64" height="64"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="64" id="BT1-iv-l2H"/>
                             <constraint firstAttribute="width" constant="64" id="eYK-yn-PVe"/>
@@ -38,24 +38,38 @@
                             <binding destination="-2" name="value" keyPath="applicationIcon" id="9"/>
                         </connections>
                     </imageView>
-                    <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8">
-                        <rect key="frame" x="94" y="83" width="288" height="16"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Status Text (set by loc. string in code)" id="54">
-                            <font key="font" metaFont="systemBold"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                        <connections>
-                            <binding destination="-2" name="value" keyPath="title" id="26"/>
-                        </connections>
-                    </textField>
-                    <progressIndicator verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="11">
-                        <rect key="frame" x="96" y="55" width="284" height="20"/>
-                        <connections>
-                            <binding destination="-2" name="maxValue" keyPath="maxProgressValue" id="13"/>
-                            <binding destination="-2" name="value" keyPath="progressValue" previousBinding="13" id="27"/>
-                        </connections>
-                    </progressIndicator>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="E7u-iB-1VW" userLabel="Status text and progress">
+                        <rect key="frame" x="92" y="56" width="288" height="42"/>
+                        <subviews>
+                            <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8">
+                                <rect key="frame" x="-2" y="26" width="292" height="16"/>
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Status Text (set by loc. string in code)" id="54">
+                                    <font key="font" metaFont="systemBold"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <binding destination="-2" name="value" keyPath="title" id="26"/>
+                                </connections>
+                            </textField>
+                            <progressIndicator verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="11">
+                                <rect key="frame" x="0.0" y="-1" width="288" height="20"/>
+                                <connections>
+                                    <binding destination="-2" name="maxValue" keyPath="maxProgressValue" id="13"/>
+                                    <binding destination="-2" name="value" keyPath="progressValue" previousBinding="13" id="27"/>
+                                </connections>
+                            </progressIndicator>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="8" secondAttribute="trailing" id="9Rq-vq-cJo"/>
+                            <constraint firstAttribute="bottom" secondItem="11" secondAttribute="bottom" id="PDQ-9x-h82"/>
+                            <constraint firstItem="8" firstAttribute="top" secondItem="E7u-iB-1VW" secondAttribute="top" id="Rtg-8u-ed1"/>
+                            <constraint firstAttribute="trailing" secondItem="11" secondAttribute="trailing" id="YFJ-Gi-yRc"/>
+                            <constraint firstItem="8" firstAttribute="leading" secondItem="E7u-iB-1VW" secondAttribute="leading" id="f16-mO-wfq"/>
+                            <constraint firstItem="11" firstAttribute="leading" secondItem="E7u-iB-1VW" secondAttribute="leading" id="jvG-0L-tcl"/>
+                            <constraint firstItem="11" firstAttribute="top" secondItem="8" secondAttribute="bottom" constant="8" symbolic="YES" id="mKu-OU-ujj"/>
+                        </constraints>
+                    </customView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="12">
                         <rect key="frame" x="274" y="14" width="112" height="40"/>
                         <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" controlSize="large" borderStyle="border" inset="2" id="55">
@@ -71,7 +85,7 @@
                         </connections>
                     </button>
                     <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="16">
-                        <rect key="frame" x="94" y="27" width="146" height="16"/>
+                        <rect key="frame" x="90" y="27" width="146" height="16"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Small System Font Text" id="56">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -88,21 +102,17 @@
                     </textField>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="11" secondAttribute="trailing" constant="20" symbolic="YES" id="1eu-lX-1HN"/>
-                    <constraint firstItem="8" firstAttribute="leading" secondItem="7" secondAttribute="trailing" constant="8" symbolic="YES" id="5bq-w6-BOU"/>
+                    <constraint firstAttribute="trailing" secondItem="E7u-iB-1VW" secondAttribute="trailing" constant="20" symbolic="YES" id="3uo-mB-Q9M"/>
                     <constraint firstItem="7" firstAttribute="top" secondItem="6" secondAttribute="top" constant="4" id="9Mg-Ac-X6m"/>
-                    <constraint firstItem="11" firstAttribute="top" secondItem="8" secondAttribute="bottom" constant="9" id="B9k-9V-CdX"/>
-                    <constraint firstItem="11" firstAttribute="leading" secondItem="7" secondAttribute="trailing" constant="8" symbolic="YES" id="EQn-l8-5gk"/>
+                    <constraint firstItem="E7u-iB-1VW" firstAttribute="centerY" secondItem="7" secondAttribute="centerY" id="Jcg-BS-tJ1"/>
                     <constraint firstItem="16" firstAttribute="leading" secondItem="7" secondAttribute="trailing" constant="8" symbolic="YES" id="LTo-e9-myp"/>
-                    <constraint firstItem="16" firstAttribute="top" relation="greaterThanOrEqual" secondItem="11" secondAttribute="bottom" constant="9" id="ViF-iJ-I4A"/>
-                    <constraint firstItem="7" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="24" id="ZLG-dr-gmv"/>
+                    <constraint firstItem="7" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="20" symbolic="YES" id="ZLG-dr-gmv"/>
+                    <constraint firstItem="12" firstAttribute="top" secondItem="E7u-iB-1VW" secondAttribute="bottom" constant="8" id="dHH-r0-at5"/>
                     <constraint firstItem="16" firstAttribute="firstBaseline" secondItem="12" secondAttribute="firstBaseline" id="dHQ-hW-3QN"/>
-                    <constraint firstItem="12" firstAttribute="top" secondItem="11" secondAttribute="bottom" constant="8" id="e4R-KE-ofU"/>
                     <constraint firstAttribute="bottom" secondItem="12" secondAttribute="bottom" constant="20" symbolic="YES" id="iY3-LJ-ivz"/>
                     <constraint firstItem="12" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="16" secondAttribute="trailing" constant="25" id="k07-gJ-v9t"/>
                     <constraint firstAttribute="trailing" secondItem="12" secondAttribute="trailing" constant="20" symbolic="YES" id="onJ-J5-mra"/>
-                    <constraint firstAttribute="trailing" secondItem="8" secondAttribute="trailing" constant="20" symbolic="YES" id="pHi-Hm-GAw"/>
-                    <constraint firstItem="8" firstAttribute="top" secondItem="6" secondAttribute="top" constant="12" id="tAo-wJ-XR0"/>
+                    <constraint firstItem="E7u-iB-1VW" firstAttribute="leading" secondItem="7" secondAttribute="trailing" constant="8" symbolic="YES" id="wiO-j2-ud9"/>
                 </constraints>
             </view>
             <point key="canvasLocation" x="-158" y="132"/>
