@@ -23,12 +23,12 @@
             <rect key="contentRect" x="200" y="222" width="400" height="107"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1470" height="918"/>
             <value key="minSize" type="size" width="213" height="107"/>
-            <view key="contentView" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="400" height="103"/>
+            <view key="contentView" misplaced="YES" id="6">
+                <rect key="frame" x="0.0" y="0.0" width="400" height="111"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView translatesAutoresizingMaskIntoConstraints="NO" id="7">
-                        <rect key="frame" x="24" y="35" width="64" height="64"/>
+                        <rect key="frame" x="24" y="43" width="64" height="64"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="64" id="BT1-iv-l2H"/>
                             <constraint firstAttribute="width" constant="64" id="eYK-yn-PVe"/>
@@ -39,7 +39,7 @@
                         </connections>
                     </imageView>
                     <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8">
-                        <rect key="frame" x="94" y="75" width="288" height="16"/>
+                        <rect key="frame" x="94" y="83" width="288" height="16"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Status Text (set by loc. string in code)" id="54">
                             <font key="font" metaFont="systemBold"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -50,15 +50,15 @@
                         </connections>
                     </textField>
                     <progressIndicator verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="11">
-                        <rect key="frame" x="96" y="47" width="284" height="20"/>
+                        <rect key="frame" x="96" y="55" width="284" height="20"/>
                         <connections>
                             <binding destination="-2" name="maxValue" keyPath="maxProgressValue" id="13"/>
                             <binding destination="-2" name="value" keyPath="progressValue" previousBinding="13" id="27"/>
                         </connections>
                     </progressIndicator>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="12">
-                        <rect key="frame" x="273" y="13" width="114" height="32"/>
-                        <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="55">
+                        <rect key="frame" x="274" y="14" width="112" height="40"/>
+                        <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" controlSize="large" borderStyle="border" inset="2" id="55">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -70,7 +70,7 @@
                         </connections>
                     </button>
                     <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="16">
-                        <rect key="frame" x="94" y="23" width="146" height="16"/>
+                        <rect key="frame" x="94" y="27" width="146" height="16"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Small System Font Text" id="56">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
