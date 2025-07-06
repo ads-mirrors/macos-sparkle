@@ -341,6 +341,8 @@ static NSString *const SUUpdateAlertTouchBarIdentifier = @"" SPARKLE_BUNDLE_IDEN
 {
     NSWindow *window = self.window;
     
+    window.movableByWindowBackground = YES;
+    
 #if SPARKLE_COPY_LOCALIZATIONS
     NSBundle *sparkleBundle = SUSparkleBundle();
 #endif
