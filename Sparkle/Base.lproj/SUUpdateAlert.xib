@@ -30,14 +30,14 @@
             <rect key="screenRect" x="0.0" y="0.0" width="1470" height="918"/>
             <value key="minSize" type="size" width="550" height="150"/>
             <view key="contentView" misplaced="YES" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="668" height="555"/>
+                <rect key="frame" x="0.0" y="0.0" width="620" height="370"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="61v-5k-OXp">
-                        <rect key="frame" x="0.0" y="0.0" width="668" height="555"/>
+                        <rect key="frame" x="0.0" y="0.0" width="668" height="563"/>
                         <subviews>
                             <customView id="cGD-9V-Gym" userLabel="Title View">
-                                <rect key="frame" x="0.0" y="349" width="620" height="64"/>
+                                <rect key="frame" x="0.0" y="357" width="620" height="64"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <imageView translatesAutoresizingMaskIntoConstraints="NO" id="F1L-zh-U8Z" userLabel="Program icon">
@@ -99,7 +99,7 @@
                                 </constraints>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="tBJ-52-VdS" userLabel="Release Notes View">
-                                <rect key="frame" x="24" y="84" width="620" height="257"/>
+                                <rect key="frame" x="24" y="92" width="620" height="257"/>
                                 <subviews>
                                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ouB-pw-pFe" userLabel="Release Notes:">
                                         <rect key="frame" x="-2" y="243" width="83" height="14"/>
@@ -132,7 +132,7 @@
                                 </constraints>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="Dg5-0U-d14" userLabel="Options view">
-                                <rect key="frame" x="0.0" y="48" width="620" height="28"/>
+                                <rect key="frame" x="0.0" y="56" width="620" height="28"/>
                                 <subviews>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="xYY-q8-ZyN">
                                         <rect key="frame" x="23" y="-1" width="316" height="30"/>
@@ -157,11 +157,11 @@
                                 </constraints>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="iUh-Md-dRX" userLabel="Choices view">
-                                <rect key="frame" x="0.0" y="0.0" width="620" height="40"/>
+                                <rect key="frame" x="0.0" y="0.0" width="620" height="48"/>
                                 <subviews>
                                     <button horizontalHuggingPriority="150" verticalHuggingPriority="750" horizontalCompressionResistancePriority="997" translatesAutoresizingMaskIntoConstraints="NO" id="uGk-Ks-HQR">
-                                        <rect key="frame" x="327" y="13" width="139" height="32"/>
-                                        <buttonCell key="cell" type="push" title="Remind Me Later" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="G8s-oM-9gf">
+                                        <rect key="frame" x="328" y="14" width="137" height="40"/>
+                                        <buttonCell key="cell" type="push" title="Remind Me Later" bezelStyle="rounded" alignment="center" controlSize="large" borderStyle="border" inset="2" id="G8s-oM-9gf">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                             <string key="keyEquivalent" base64-UTF8="YES">
@@ -176,8 +176,8 @@ Gw
                                         </connections>
                                     </button>
                                     <button horizontalHuggingPriority="20" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="sUq-y0-gA3">
-                                        <rect key="frame" x="464" y="13" width="139" height="32"/>
-                                        <buttonCell key="cell" type="push" title="Install Update" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" inset="2" id="IIY-s3-hkz">
+                                        <rect key="frame" x="465" y="14" width="137" height="40"/>
+                                        <buttonCell key="cell" type="push" title="Install Update" bezelStyle="rounded" alignment="center" controlSize="large" state="on" borderStyle="border" inset="2" id="IIY-s3-hkz">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                             <string key="keyEquivalent" base64-UTF8="YES">
@@ -192,8 +192,8 @@ DQ
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="998" translatesAutoresizingMaskIntoConstraints="NO" id="nRH-TL-zdL">
-                                        <rect key="frame" x="17" y="13" width="139" height="32"/>
-                                        <buttonCell key="cell" type="push" title="Skip This Version" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="kVE-pO-gl0">
+                                        <rect key="frame" x="18" y="14" width="137" height="40"/>
+                                        <buttonCell key="cell" type="push" title="Skip This Version" bezelStyle="rounded" alignment="center" controlSize="large" borderStyle="border" inset="2" id="kVE-pO-gl0">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
