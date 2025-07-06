@@ -63,3 +63,6 @@
 
 /* Class = "NSTextFieldCell"; title = "Release Notes:"; ObjectID = "170"; */
 "Release Notes:" = "Változások az előző verzióhoz képest:";
+
+/* Software Update title/label */
+"Software Update" = "Szoftverfrissítés";

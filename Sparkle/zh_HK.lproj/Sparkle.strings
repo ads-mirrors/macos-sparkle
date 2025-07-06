@@ -153,3 +153,6 @@
 
 /* Class = "NSTextFieldCell"; title = "Release Notes:"; ObjectID = "170"; */
 "Release Notes:" = "更新事項：";
+
+/* Software Update title/label */
+"Software Update" = "軟體更新";

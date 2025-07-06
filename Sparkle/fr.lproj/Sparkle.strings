@@ -102,3 +102,6 @@
 
 /* Class = "NSTextFieldCell"; title = "Release Notes:"; ObjectID = "170"; */
 "Release Notes:" = "Notes de version :";
+
+/* Software Update title/label */
+"Software Update" = "Mise à jour logiciel";

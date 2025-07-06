@@ -201,3 +201,6 @@
 
 /* Class = "NSTextFieldCell"; title = "Release Notes:"; ObjectID = "170"; */
 "Release Notes:" = "Versiegegevens:";
+
+/* Software Update title/label */
+"Software Update" = "Software-update";

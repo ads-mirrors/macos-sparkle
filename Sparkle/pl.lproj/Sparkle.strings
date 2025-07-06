@@ -84,3 +84,6 @@
 
 /* Class = "NSTextFieldCell"; title = "Release Notes:"; ObjectID = "170"; */
 "Release Notes:" = "Szczegóły wydania:";
+
+/* Software Update title/label */
+"Software Update" = "Uaktualnienie oprogramowania";

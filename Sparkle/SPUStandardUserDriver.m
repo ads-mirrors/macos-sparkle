@@ -538,7 +538,7 @@ static const NSTimeInterval SUScheduledUpdateIdleEventLeewayInterval = DEBUG ? 3
     NSBundle *sparkleBundle = SUSparkleBundle();
 #endif
     
-    _checkingController = [[SUStatusController alloc] initWithHost:_host windowTitle:@"" centerPointValue:nil minimizable:NO closable:NO];
+    _checkingController = [[SUStatusController alloc] initWithHost:_host windowTitle:SULocalizedStringFromTableInBundle(@"Software Update", SPARKLE_TABLE, sparkleBundle, nil) centerPointValue:nil minimizable:NO closable:NO];
     [[_checkingController window] center]; // Force the checking controller to load its window.
     [_checkingController beginActionWithTitle:SULocalizedStringFromTableInBundle(@"Checking for updates…", SPARKLE_TABLE, sparkleBundle, nil) maxProgressValue:0.0 statusText:nil];
     [_checkingController setButtonTitle:SULocalizedStringFromTableInBundle(@"Cancel", SPARKLE_TABLE, sparkleBundle, nil) target:self action:@selector(cancelCheckForUpdates:) isDefault:NO accessibilityIdentifier:@"SUStatusCancel"];

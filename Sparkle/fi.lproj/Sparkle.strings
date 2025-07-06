@@ -57,3 +57,6 @@
 
 /* Class = "NSTextFieldCell"; title = "Release Notes:"; ObjectID = "170"; */
 "Release Notes:" = "Tietoa päivityksestä:";
+
+/* Software Update title/label */
+"Software Update" = "Ohjelmiston pävitys";

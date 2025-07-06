@@ -57,3 +57,6 @@
 
 /* Release Notes: label */
 "Release Notes:" = "معلومات عن الإصدار:";
+
+/* Software Update title/label */
+"Software Update" = "محدث البرنامج";

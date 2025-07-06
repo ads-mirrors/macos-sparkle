@@ -90,3 +90,6 @@
 
 /* Class = "NSTextFieldCell"; title = "Release Notes:"; ObjectID = "170"; */
 "Release Notes:" = "Om oppdateringen:";
+
+/* Software Update title/label */
+"Software Update" = "Programoppdatering";

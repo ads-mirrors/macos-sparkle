@@ -81,3 +81,6 @@
 
 /* Class = "NSTextFieldCell"; title = "Release Notes:"; ObjectID = "170"; */
 "Release Notes:" = "Opombe ob izdaji:";
+
+/* Software Update title/label */
+"Software Update" = "Posodabljanje programske opreme";

@@ -63,3 +63,6 @@
 
 /* Release Notes: label */
 "Release Notes:" = "Notes d'aquesta versió:";
+
+/* Software Update title/label */
+"Software Update" = "Actualització del programari";
