@@ -346,6 +346,8 @@ static NSString *const SUUpdateAlertTouchBarIdentifier = @"" SPARKLE_BUNDLE_IDEN
 #if SPARKLE_COPY_LOCALIZATIONS
     NSBundle *sparkleBundle = SUSparkleBundle();
 #endif
+    
+    window.title = SULocalizedStringFromTableInBundle(@"Software Update", SPARKLE_TABLE, SUSparkleBundle(), @"");
     _releaseNotesLabel.stringValue = SULocalizedStringFromTableInBundle(@"Release Notes:", SPARKLE_TABLE, SUSparkleBundle(), @"");
     
     // Customize custom NSBox
