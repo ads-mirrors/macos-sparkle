@@ -23,12 +23,12 @@
             <rect key="contentRect" x="200" y="222" width="400" height="107"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1470" height="918"/>
             <value key="minSize" type="size" width="213" height="107"/>
-            <view key="contentView" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="400" height="113"/>
+            <view key="contentView" misplaced="YES" id="6">
+                <rect key="frame" x="0.0" y="0.0" width="400" height="105"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView translatesAutoresizingMaskIntoConstraints="NO" id="7">
-                        <rect key="frame" x="20" y="45" width="64" height="64"/>
+                        <rect key="frame" x="20" y="37" width="64" height="64"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="64" id="BT1-iv-l2H"/>
                             <constraint firstAttribute="width" constant="64" id="eYK-yn-PVe"/>
@@ -39,7 +39,7 @@
                         </connections>
                     </imageView>
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="E7u-iB-1VW" userLabel="Status text and progress">
-                        <rect key="frame" x="92" y="56" width="288" height="42"/>
+                        <rect key="frame" x="92" y="48" width="288" height="42"/>
                         <subviews>
                             <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8">
                                 <rect key="frame" x="-2" y="26" width="292" height="16"/>
@@ -71,8 +71,8 @@
                         </constraints>
                     </customView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="12">
-                        <rect key="frame" x="274" y="14" width="112" height="40"/>
-                        <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" controlSize="large" borderStyle="border" inset="2" id="55">
+                        <rect key="frame" x="273" y="13" width="114" height="32"/>
+                        <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="55">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -85,7 +85,7 @@
                         </connections>
                     </button>
                     <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="16">
-                        <rect key="frame" x="90" y="27" width="146" height="16"/>
+                        <rect key="frame" x="90" y="23" width="146" height="16"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Small System Font Text" id="56">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>

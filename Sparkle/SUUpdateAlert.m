@@ -371,6 +371,12 @@ static NSString *const SUUpdateAlertTouchBarIdentifier = @"" SPARKLE_BUNDLE_IDEN
         _releaseNotesBoxView.contentView.layer.cornerRadius = boxCornerRadius - boxBorderWidth;
     }
     
+    if (@available(macOS 16, *)) {
+        _skipButton.controlSize = NSControlSizeLarge;
+        _laterButton.controlSize = NSControlSizeLarge;
+        _installButton.controlSize = NSControlSizeLarge;
+    }
+    
     BOOL showReleaseNotes = [self showsReleaseNotes];
     if (showReleaseNotes) {
         window.frameAutosaveName = @"SUUpdateAlert";
@@ -389,6 +395,9 @@ static NSString *const SUUpdateAlertTouchBarIdentifier = @"" SPARKLE_BUNDLE_IDEN
     
     if (showReleaseNotes) {
         [self displayReleaseNotesSpinner];
+        
+        // Add more spacing to give choices and automatic installs checkbox better grouping
+        [_stackView setCustomSpacing:15.0 afterView:_releaseNotesContainerView];
     } else {
         _releaseNotesContainerView.hidden = YES;
     }
