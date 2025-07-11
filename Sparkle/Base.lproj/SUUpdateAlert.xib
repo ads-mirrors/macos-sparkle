@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24093.8" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24093.9" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24093.8"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24093.9"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,6 +17,7 @@
                 <outlet property="_releaseNotesLabel" destination="ouB-pw-pFe" id="yub-B2-zgv"/>
                 <outlet property="_skipButton" destination="nRH-TL-zdL" id="1wh-qo-iMh"/>
                 <outlet property="_stackView" destination="61v-5k-OXp" id="1rj-X0-yNf"/>
+                <outlet property="_titleView" destination="cGD-9V-Gym" id="4EE-yh-bV0"/>
                 <outlet property="window" destination="5" id="69"/>
             </connections>
         </customObject>
@@ -34,10 +35,10 @@
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="61v-5k-OXp">
-                        <rect key="frame" x="0.0" y="0.0" width="660" height="413"/>
+                        <rect key="frame" x="0.0" y="0.0" width="660" height="399"/>
                         <subviews>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="cGD-9V-Gym" userLabel="Title View">
-                                <rect key="frame" x="0.0" y="349" width="660" height="64"/>
+                                <rect key="frame" x="0.0" y="335" width="660" height="64"/>
                                 <subviews>
                                     <imageView translatesAutoresizingMaskIntoConstraints="NO" id="F1L-zh-U8Z" userLabel="Program icon">
                                         <rect key="frame" x="20" y="0.0" width="64" height="64"/>
@@ -98,7 +99,7 @@
                                 </constraints>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="tBJ-52-VdS" userLabel="Release Notes View">
-                                <rect key="frame" x="20" y="84" width="620" height="257"/>
+                                <rect key="frame" x="20" y="70" width="620" height="257"/>
                                 <subviews>
                                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ouB-pw-pFe" userLabel="Release Notes:">
                                         <rect key="frame" x="-2" y="243" width="83" height="14"/>
@@ -131,18 +132,14 @@
                                 </constraints>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="Dg5-0U-d14" userLabel="Options view">
-                                <rect key="frame" x="0.0" y="48" width="660" height="28"/>
+                                <rect key="frame" x="0.0" y="48" width="660" height="14"/>
                                 <subviews>
-                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="xYY-q8-ZyN">
-                                        <rect key="frame" x="19" y="-1" width="316" height="30"/>
+                                    <button verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="xYY-q8-ZyN">
+                                        <rect key="frame" x="19" y="-1" width="316" height="16"/>
                                         <buttonCell key="cell" type="check" title="Automatically download and install updates in the future" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="fPh-Q9-vLr">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="smallSystem"/>
                                         </buttonCell>
-                                        <constraints>
-                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="28" id="8cm-cw-KJ9"/>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="14" id="Avt-Pa-tub"/>
-                                        </constraints>
                                         <connections>
                                             <binding destination="-2" name="value" keyPath="self.updaterSettings.automaticallyDownloadsUpdates" id="ckv-Jc-M6i"/>
                                         </connections>

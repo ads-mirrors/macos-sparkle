@@ -55,6 +55,7 @@ static NSString *const SUUpdateAlertTouchBarIdentifier = @"" SPARKLE_BUNDLE_IDEN
     IBOutlet NSView *_releaseNotesContentView;
     IBOutlet NSTextField *_releaseNotesLabel;
     IBOutlet NSButton *_automaticallyInstallUpdatesButton;
+    IBOutlet NSView *_titleView;
     
     void (^_didBecomeKeyBlock)(void);
     void(^_completionBlock)(SPUUserUpdateChoice, NSRect, BOOL);
@@ -350,6 +351,8 @@ static NSString *const SUUpdateAlertTouchBarIdentifier = @"" SPARKLE_BUNDLE_IDEN
     window.title = SULocalizedStringFromTableInBundle(@"Software Update", SPARKLE_TABLE, SUSparkleBundle(), @"");
     _releaseNotesLabel.stringValue = SULocalizedStringFromTableInBundle(@"Release Notes:", SPARKLE_TABLE, SUSparkleBundle(), @"");
     
+    [_stackView setCustomSpacing:12.0 afterView:_titleView];
+    
     // Customize custom NSBox
     {
         CGFloat boxCornerRadius = 6.0;
@@ -397,7 +400,7 @@ static NSString *const SUUpdateAlertTouchBarIdentifier = @"" SPARKLE_BUNDLE_IDEN
         [self displayReleaseNotesSpinner];
         
         // Add more spacing to give choices and automatic installs checkbox better grouping
-        [_stackView setCustomSpacing:15.0 afterView:_releaseNotesContainerView];
+        [_stackView setCustomSpacing:12.0 afterView:_releaseNotesContainerView];
     } else {
         _releaseNotesContainerView.hidden = YES;
     }
