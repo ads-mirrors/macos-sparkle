@@ -190,8 +190,5 @@
 /* System profile key for Memory (MB) */
 "Memory (MB)" = "זיכרון (MB)";
 
-/* Class = "NSTextFieldCell"; title = "Release Notes:"; ObjectID = "170"; */
-"Release Notes:" = "הערות שחרור:";
-
 /* Software Update title/label */
 "Software Update" = "עדכון תוכנה";

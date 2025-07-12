@@ -94,8 +94,5 @@
 /* Status message shown when the user checks for updates but is already current or the feed doesn't contain any updates. */
 "You’re up to date!" = "¡Está actualizado!";
 
-/* Class = "NSTextFieldCell"; title = "Release Notes:"; ObjectID = "170"; */
-"Release Notes:" = "Notas de la versión:";
-
 /* Software Update title/label */
 "Software Update" = "Actualización de software";

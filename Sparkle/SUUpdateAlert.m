@@ -50,10 +50,8 @@ static NSString *const SUUpdateAlertTouchBarIdentifier = @"" SPARKLE_BUNDLE_IDEN
     IBOutlet NSButton *_installButton;
     IBOutlet NSButton *_laterButton;
     IBOutlet NSButton *_skipButton;
-    IBOutlet NSView *_releaseNotesContainerView;
     IBOutlet NSBox *_releaseNotesBoxView;
     IBOutlet NSView *_releaseNotesContentView;
-    IBOutlet NSTextField *_releaseNotesLabel;
     IBOutlet NSButton *_automaticallyInstallUpdatesButton;
     IBOutlet NSView *_titleView;
     
@@ -348,9 +346,6 @@ static NSString *const SUUpdateAlertTouchBarIdentifier = @"" SPARKLE_BUNDLE_IDEN
     NSBundle *sparkleBundle = SUSparkleBundle();
 #endif
     
-    window.title = SULocalizedStringFromTableInBundle(@"Software Update", SPARKLE_TABLE, SUSparkleBundle(), @"");
-    _releaseNotesLabel.stringValue = SULocalizedStringFromTableInBundle(@"Release Notes:", SPARKLE_TABLE, SUSparkleBundle(), @"");
-    
     [_stackView setCustomSpacing:12.0 afterView:_titleView];
     
     // Customize custom NSBox
@@ -400,9 +395,9 @@ static NSString *const SUUpdateAlertTouchBarIdentifier = @"" SPARKLE_BUNDLE_IDEN
         [self displayReleaseNotesSpinner];
         
         // Add more spacing to give choices and automatic installs checkbox better grouping
-        [_stackView setCustomSpacing:12.0 afterView:_releaseNotesContainerView];
+        [_stackView setCustomSpacing:12.0 afterView:_releaseNotesBoxView];
     } else {
-        _releaseNotesContainerView.hidden = YES;
+        _releaseNotesBoxView.hidden = YES;
     }
     
     // NOTE: The code below for deciding what buttons to hide is complex! Due to array of feature configurations :)
