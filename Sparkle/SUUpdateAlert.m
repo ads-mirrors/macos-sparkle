@@ -33,6 +33,8 @@
 
 static NSString *const SUUpdateAlertTouchBarIdentifier = @"" SPARKLE_BUNDLE_IDENTIFIER ".SUUpdateAlert";
 
+static const CGFloat SUUpdateAlertGroupElementSpacing = 12.0;
+
 @interface SUUpdateAlert () <NSTouchBarDelegate>
 @end
 
@@ -346,7 +348,7 @@ static NSString *const SUUpdateAlertTouchBarIdentifier = @"" SPARKLE_BUNDLE_IDEN
     NSBundle *sparkleBundle = SUSparkleBundle();
 #endif
     
-    [_stackView setCustomSpacing:12.0 afterView:_titleView];
+    [_stackView setCustomSpacing:SUUpdateAlertGroupElementSpacing afterView:_titleView];
     
     // Customize custom NSBox
     {
@@ -395,7 +397,7 @@ static NSString *const SUUpdateAlertTouchBarIdentifier = @"" SPARKLE_BUNDLE_IDEN
         [self displayReleaseNotesSpinner];
         
         // Add more spacing to give choices and automatic installs checkbox better grouping
-        [_stackView setCustomSpacing:12.0 afterView:_releaseNotesBoxView];
+        [_stackView setCustomSpacing:SUUpdateAlertGroupElementSpacing afterView:_releaseNotesBoxView];
     } else {
         _releaseNotesBoxView.hidden = YES;
     }
