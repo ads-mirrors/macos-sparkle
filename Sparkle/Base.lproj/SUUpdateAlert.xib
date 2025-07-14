@@ -131,7 +131,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="680" height="40"/>
                                 <subviews>
                                     <button horizontalHuggingPriority="150" verticalHuggingPriority="750" horizontalCompressionResistancePriority="997" translatesAutoresizingMaskIntoConstraints="NO" id="uGk-Ks-HQR">
-                                        <rect key="frame" x="391" y="13" width="139" height="32"/>
+                                        <rect key="frame" x="395" y="13" width="137" height="32"/>
                                         <buttonCell key="cell" type="push" title="Remind Me Later" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="G8s-oM-9gf">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -148,7 +148,7 @@ Gw
                                         </connections>
                                     </button>
                                     <button horizontalHuggingPriority="20" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="sUq-y0-gA3">
-                                        <rect key="frame" x="528" y="13" width="139" height="32"/>
+                                        <rect key="frame" x="530" y="13" width="137" height="32"/>
                                         <buttonCell key="cell" type="push" title="Install Update" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" inset="2" id="IIY-s3-hkz">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -182,7 +182,7 @@ DQ
                                     <constraint firstItem="uGk-Ks-HQR" firstAttribute="width" secondItem="sUq-y0-gA3" secondAttribute="width" id="EWD-pD-s8E"/>
                                     <constraint firstItem="sUq-y0-gA3" firstAttribute="leading" secondItem="uGk-Ks-HQR" secondAttribute="trailing" constant="12" symbolic="YES" id="GNV-C1-iwM"/>
                                     <constraint firstItem="uGk-Ks-HQR" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="nRH-TL-zdL" secondAttribute="trailing" constant="12" symbolic="YES" id="JIK-Ix-vKz"/>
-                                    <constraint firstItem="nRH-TL-zdL" firstAttribute="width" secondItem="sUq-y0-gA3" secondAttribute="width" id="ZG6-hO-ueO"/>
+                                    <constraint firstItem="nRH-TL-zdL" firstAttribute="width" relation="greaterThanOrEqual" secondItem="sUq-y0-gA3" secondAttribute="width" id="ZG6-hO-ueO"/>
                                     <constraint firstAttribute="bottom" secondItem="nRH-TL-zdL" secondAttribute="bottom" constant="20" symbolic="YES" id="hi9-TB-2I7"/>
                                     <constraint firstAttribute="trailing" secondItem="sUq-y0-gA3" secondAttribute="trailing" constant="20" symbolic="YES" id="qFp-Lz-Zct"/>
                                     <constraint firstItem="nRH-TL-zdL" firstAttribute="baseline" secondItem="uGk-Ks-HQR" secondAttribute="baseline" id="u6y-Qc-AKF"/>
