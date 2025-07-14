@@ -29,7 +29,7 @@
             <rect key="screenRect" x="0.0" y="0.0" width="1470" height="918"/>
             <value key="minSize" type="size" width="550" height="150"/>
             <view key="contentView" misplaced="YES" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="660" height="399"/>
+                <rect key="frame" x="0.0" y="0.0" width="620" height="370"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="61v-5k-OXp">
@@ -43,7 +43,6 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="64" id="66j-dF-FGm"/>
                                             <constraint firstAttribute="width" secondItem="F1L-zh-U8Z" secondAttribute="height" multiplier="1:1" id="OlN-VE-Lim"/>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="800" constant="64" id="yxX-WT-Sg2"/>
                                         </constraints>
                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyUpOrDown" image="NSApplicationIcon" id="k4f-D1-7oF"/>
                                         <connections>
