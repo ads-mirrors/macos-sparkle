@@ -177,48 +177,39 @@
         NSString *tempIconDestinationPath = nil;
         AuthorizationItem iconAuthorizationItem = {.name = kAuthorizationEnvironmentIcon, .valueLength = 0, .value = NULL, .flags = 0};
         
-        // Find a 32x32 image representation of the icon, and write out a PNG version of it to a temporary location
-        // Then use the icon (if one is available) for the authorization prompt
+        // If an icon bundle path is specified, write out that icon's TIFF data to a temporary file.
+        // Then use that image data for the authorization prompt
         if (iconBundlePath != nil) {
             NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFile:iconBundlePath];
             
-            for (NSImageRep *imageRep in [icon representations]) {
-                if (![imageRep isKindOfClass:[NSBitmapImageRep class]]) {
-                    continue;
-                }
-                
-                NSBitmapImageRep *bitmapImageRep = (NSBitmapImageRep *)imageRep;
-                NSSize size = bitmapImageRep.size;
-                if (size.width == 32 && size.height == 32) {
-                    NSData *pngData = [bitmapImageRep representationUsingType:NSBitmapImageFileTypePNG properties:@{}];
-                    if (pngData != nil) {
-                        // Use /tmp rather than NSTemporaryDirectory() or SUFileManager's temp directory function because we want:
-                        // a) no spaces in the path (SU/NSFileManager fails here)
-                        // b) short file path that does not exceed a small threshold (NSTemporaryDirectory() fails here) only apply to older systems (eg: macOS 10.8)
-                        // The file also needs to be placed in a system readable place such as /tmp
-                        // See https://github.com/sparkle-project/Sparkle/issues/347#issuecomment-149523848 for more info
-                        char pathBuffer[] = "/tmp/XXXXXX.png";
-                        int tempIconFile = mkstemps(pathBuffer, strlen(".png"));
-                        if (tempIconFile == -1) {
-                            SULog(SULogLevelError, @"Failed to open temp icon from path buffer with error: %d", errno);
+            NSData *tiffData = [icon TIFFRepresentation];
+            
+            if (tiffData != nil) {
+                // Use /tmp rather than NSTemporaryDirectory() or SUFileManager's temp directory function because we want:
+                // a) no spaces in the path (SU/NSFileManager fails here)
+                // b) short file path that does not exceed a small threshold (NSTemporaryDirectory() fails here) only apply to older systems (eg: macOS 10.8)
+                // The file also needs to be placed in a system readable place such as /tmp
+                // See https://github.com/sparkle-project/Sparkle/issues/347#issuecomment-149523848 for more info
+                char pathBuffer[] = "/tmp/XXXXXX.png";
+                int tempIconFile = mkstemps(pathBuffer, strlen(".png"));
+                if (tempIconFile == -1) {
+                    SULog(SULogLevelError, @"Failed to open temp icon from path buffer with error: %d", errno);
+                } else {
+                    close(tempIconFile);
+                    
+                    tempIconDestinationPath = [[NSString alloc] initWithUTF8String:pathBuffer];
+                    
+                    if (tempIconDestinationPath != nil) {
+                        if (![tiffData writeToFile:tempIconDestinationPath atomically:NO]) {
+                            SULog(SULogLevelError, @"Failed to write icon image data to %@", tempIconDestinationPath);
                         } else {
-                            close(tempIconFile);
+                            iconAuthorizationItem.valueLength = strlen(pathBuffer);
+                            iconAuthorizationItem.value = pathBuffer;
                             
-                            tempIconDestinationPath = [[NSString alloc] initWithUTF8String:pathBuffer];
-                            
-                            if (![pngData writeToFile:tempIconDestinationPath atomically:NO]) {
-                                SULog(SULogLevelError, @"Failed to write icon image data to %@", tempIconDestinationPath);
-                            } else {
-                                iconAuthorizationItem.valueLength = strlen(pathBuffer);
-                                iconAuthorizationItem.value = pathBuffer;
-                                
-                                authorizationEnvironment.count = 1;
-                                authorizationEnvironment.items = &iconAuthorizationItem;
-                            }
+                            authorizationEnvironment.count = 1;
+                            authorizationEnvironment.items = &iconAuthorizationItem;
                         }
                     }
-                    
-                    break;
                 }
             }
         }
