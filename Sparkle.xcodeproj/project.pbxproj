@@ -106,7 +106,6 @@
 		61EF67560E25B58D00F754E0 /* SUHost.m in Sources */ = {isa = PBXBuildFile; fileRef = 61EF67550E25B58D00F754E0 /* SUHost.m */; };
 		61EF67590E25C5B400F754E0 /* SUHost.h in Headers */ = {isa = PBXBuildFile; fileRef = 61EF67580E25C5B400F754E0 /* SUHost.h */; };
 		654F352529B1548700B10EEB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61B5F8F609C4CEB300B25A18 /* Security.framework */; };
-		654F352729B154AE00B10EEB /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 654F352629B154AE00B10EEB /* ImageIO.framework */; };
 		654F352829B154B500B10EEB /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C14F31136EFC2400649790 /* SystemConfiguration.framework */; };
 		654F352929B154BB00B10EEB /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 724BB3B51D35AAC3005D534A /* ServiceManagement.framework */; };
 		654F352C29B154E900B10EEB /* UniformTypeIdentifiers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6D399502814387000A8C0DA /* UniformTypeIdentifiers.framework */; };
@@ -315,6 +314,7 @@
 		7269E4982648D3460088C213 /* SPUSkippedUpdate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7269E493264798200088C213 /* SPUSkippedUpdate.m */; };
 		7269E49A2648F7C00088C213 /* SPUUserUpdateState.m in Sources */ = {isa = PBXBuildFile; fileRef = 7269E4992648F7C00088C213 /* SPUUserUpdateState.m */; };
 		726B20612CF4F1D300E6F7DB /* DevSignedAppVersion2.dmg in Resources */ = {isa = PBXBuildFile; fileRef = 726B20602CF4F1D300E6F7DB /* DevSignedAppVersion2.dmg */; };
+		726BA5132E25F60000CE93C3 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0867D6A5FE840307C02AAC07 /* AppKit.framework */; };
 		726DF88E1C84277600188804 /* SPUUserUpdateState.h in Headers */ = {isa = PBXBuildFile; fileRef = 726DF88D1C84277500188804 /* SPUUserUpdateState.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		726E075C1CA3A6D6001A286B /* SPUSecureCoding.h in Headers */ = {isa = PBXBuildFile; fileRef = 726E075A1CA3A6D6001A286B /* SPUSecureCoding.h */; };
 		726E075D1CA3A6D6001A286B /* SPUSecureCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 726E075B1CA3A6D6001A286B /* SPUSecureCoding.m */; };
@@ -1610,11 +1610,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				726BA5132E25F60000CE93C3 /* AppKit.framework in Frameworks */,
 				654F352D29B1551000B10EEB /* CoreServices.framework in Frameworks */,
 				654F352C29B154E900B10EEB /* UniformTypeIdentifiers.framework in Frameworks */,
 				654F352929B154BB00B10EEB /* ServiceManagement.framework in Frameworks */,
 				654F352829B154B500B10EEB /* SystemConfiguration.framework in Frameworks */,
-				654F352729B154AE00B10EEB /* ImageIO.framework in Frameworks */,
 				654F352529B1548700B10EEB /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
