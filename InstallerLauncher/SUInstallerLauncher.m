@@ -177,14 +177,25 @@
         NSString *tempIconDestinationPath = nil;
         AuthorizationItem iconAuthorizationItem = {.name = kAuthorizationEnvironmentIcon, .valueLength = 0, .value = NULL, .flags = 0};
         
-        // If an icon bundle path is specified, write out that icon's TIFF data to a temporary file.
+        // If an icon bundle path is specified, write out a representation of the icon's data to a temporary file.
         // Then use that image data for the authorization prompt
         if (iconBundlePath != nil) {
             NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFile:iconBundlePath];
             
-            NSData *tiffData = [icon TIFFRepresentation];
+            // Creating a bitmap representation at a specific size is much cheaper than asking for icon's TIFFRepresentation
+            const NSInteger imageDimensions = 64;
+            NSBitmapImageRep *iconBitmapRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:NULL pixelsWide:imageDimensions pixelsHigh:imageDimensions bitsPerSample:8 samplesPerPixel:4 hasAlpha:YES isPlanar:NO colorSpaceName:NSCalibratedRGBColorSpace bytesPerRow:0 bitsPerPixel:0];
             
-            if (tiffData != nil) {
+            [NSGraphicsContext saveGraphicsState];
+            
+            NSGraphicsContext.currentContext = [NSGraphicsContext graphicsContextWithBitmapImageRep:iconBitmapRep];
+            [icon drawInRect:NSMakeRect(0, 0, imageDimensions, imageDimensions)];
+            
+            [NSGraphicsContext restoreGraphicsState];
+            
+            NSData *pngData = [iconBitmapRep representationUsingType:NSBitmapImageFileTypePNG properties:@{}];
+            
+            if (pngData != nil) {
                 // Use /tmp rather than NSTemporaryDirectory() or SUFileManager's temp directory function because we want:
                 // a) no spaces in the path (SU/NSFileManager fails here)
                 // b) short file path that does not exceed a small threshold (NSTemporaryDirectory() fails here) only apply to older systems (eg: macOS 10.8)
@@ -197,10 +208,10 @@
                 } else {
                     close(tempIconFile);
                     
-                    tempIconDestinationPath = [[NSString alloc] initWithUTF8String:pathBuffer];
+                    tempIconDestinationPath = [[NSFileManager defaultManager] stringWithFileSystemRepresentation:pathBuffer length:strlen(pathBuffer)];
                     
                     if (tempIconDestinationPath != nil) {
-                        if (![tiffData writeToFile:tempIconDestinationPath atomically:NO]) {
+                        if (![pngData writeToFile:tempIconDestinationPath atomically:NO]) {
                             SULog(SULogLevelError, @"Failed to write icon image data to %@", tempIconDestinationPath);
                         } else {
                             iconAuthorizationItem.valueLength = strlen(pathBuffer);
