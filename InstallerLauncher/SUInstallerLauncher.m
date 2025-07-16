@@ -19,12 +19,12 @@
 
 // We only fetch bundle icon for Installer Launcher XPC Service
 #if defined(BUILDING_SPARKLE_SOURCES_EXTERNALLY) && BUILDING_SPARKLE_SOURCES_EXTERNALLY
-#define FETCH_BUNDLE_ICON 1
+#define FETCH_BUNDLE_ICON_FOR_AUTH 1
 #else
-#define FETCH_BUNDLE_ICON 0
+#define FETCH_BUNDLE_ICON_FOR_AUTH 0
 #endif
 
-#if FETCH_BUNDLE_ICON
+#if FETCH_BUNDLE_ICON_FOR_AUTH
 #import <AppKit/AppKit.h>
 #else
 #include "AppKitPrevention.h"
@@ -171,7 +171,7 @@
         AuthorizationFlags flags = (AuthorizationFlags)(kAuthorizationFlagExtendRights | kAuthorizationFlagInteractionAllowed);
         AuthorizationEnvironment authorizationEnvironment = {.count = 0, .items = NULL};
         
-#if FETCH_BUNDLE_ICON
+#if FETCH_BUNDLE_ICON_FOR_AUTH
         NSString *tempIconDestinationPath = nil;
         AuthorizationItem iconAuthorizationItem = {.name = kAuthorizationEnvironmentIcon, .valueLength = 0, .value = NULL, .flags = 0};
         
@@ -236,7 +236,7 @@
             }
         }
         
-#if FETCH_BUNDLE_ICON
+#if FETCH_BUNDLE_ICON_FOR_AUTH
         if (tempIconDestinationPath != nil) {
             [[NSFileManager defaultManager] removeItemAtPath:tempIconDestinationPath error:NULL];
         }
