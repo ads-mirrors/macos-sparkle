@@ -11,12 +11,10 @@
 #import "SUFileManager.h"
 #import "SULog.h"
 #import "SPUMessageTypes.h"
-#import "SUBundleIcon.h"
 #import "SPULocalCacheDirectory.h"
 #import "SPUInstallationType.h"
 #import "SUHost.h"
 #import <ServiceManagement/ServiceManagement.h>
-#import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
 #import <SystemConfiguration/SystemConfiguration.h>
 
 // We only fetch bundle icon for Installer Launcher XPC Service
