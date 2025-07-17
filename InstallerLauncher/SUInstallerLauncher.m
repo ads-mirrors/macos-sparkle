@@ -174,6 +174,7 @@
 #if FETCH_BUNDLE_ICON_FOR_AUTH
         NSString *tempIconDestinationPath = nil;
         AuthorizationItem iconAuthorizationItem = {.name = kAuthorizationEnvironmentIcon, .valueLength = 0, .value = NULL, .flags = 0};
+        char iconPathBuffer[] = "/tmp/XXXXXX.png";
         
         // If an icon bundle path is specified, write out a representation of the icon's data to a temporary file.
         // Then use that image data for the authorization prompt
@@ -207,21 +208,20 @@
                 // b) short file path that does not exceed a small threshold (NSTemporaryDirectory() fails here) only apply to older systems (eg: macOS 10.8)
                 // The file also needs to be placed in a system readable place such as /tmp
                 // See https://github.com/sparkle-project/Sparkle/issues/347#issuecomment-149523848 for more info
-                char pathBuffer[] = "/tmp/XXXXXX.png";
-                int tempIconFile = mkstemps(pathBuffer, strlen(".png"));
+                int tempIconFile = mkstemps(iconPathBuffer, strlen(".png"));
                 if (tempIconFile == -1) {
                     SULog(SULogLevelError, @"Failed to open temp icon from path buffer with error: %d", errno);
                 } else {
                     close(tempIconFile);
                     
-                    tempIconDestinationPath = [[NSFileManager defaultManager] stringWithFileSystemRepresentation:pathBuffer length:strlen(pathBuffer)];
+                    tempIconDestinationPath = [[NSFileManager defaultManager] stringWithFileSystemRepresentation:iconPathBuffer length:strlen(iconPathBuffer)];
                     
                     if (tempIconDestinationPath != nil) {
                         if (![pngData writeToFile:tempIconDestinationPath atomically:NO]) {
                             SULog(SULogLevelError, @"Failed to write icon image data to %@", tempIconDestinationPath);
                         } else {
-                            iconAuthorizationItem.valueLength = strlen(pathBuffer);
-                            iconAuthorizationItem.value = pathBuffer;
+                            iconAuthorizationItem.valueLength = strlen(iconPathBuffer);
+                            iconAuthorizationItem.value = iconPathBuffer;
                             
                             authorizationEnvironment.count = 1;
                             authorizationEnvironment.items = &iconAuthorizationItem;
