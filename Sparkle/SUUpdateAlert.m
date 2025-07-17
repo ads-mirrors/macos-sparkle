@@ -379,7 +379,7 @@ static const CGFloat SUUpdateAlertGroupElementSpacing = 12.0;
     
     BOOL showReleaseNotes = [self showsReleaseNotes];
     if (showReleaseNotes) {
-        window.frameAutosaveName = @"SUUpdateAlert";
+        window.frameAutosaveName = @"SUUpdateAlert2";
     } else {
         // Update alert should not be resizable when no release notes are available
         window.styleMask &= ~NSWindowStyleMaskResizable;
