@@ -164,6 +164,7 @@
 		721D8A861D4ADFEB0032E472 /* SPULocalCacheDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = 721BC20D1D1CDE55002BC71E /* SPULocalCacheDirectory.m */; };
 		721D8A871D4C5BF10032E472 /* SULog.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C14F05136EF6DB00649790 /* SULog.m */; };
 		722545B626805FF80036465C /* testappcast_info_updates.xml in Resources */ = {isa = PBXBuildFile; fileRef = 722545B526805FF80036465C /* testappcast_info_updates.xml */; };
+		7225D79F2E541C8A001EF4EC /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 7225D79E2E541C8A001EF4EC /* AppIcon.icon */; };
 		72266A872946359600645376 /* SUFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7267E5E41D3D90AA00D1BF90 /* SUFileManager.m */; };
 		72266A88294635BA00645376 /* SUAppcastDriver.m in Sources */ = {isa = PBXBuildFile; fileRef = 72B767C91C9B707000A07552 /* SUAppcastDriver.m */; };
 		72266A8A2946493C00645376 /* SUCodeSigningVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 7267E5991D3D8A5A00D1BF90 /* SUCodeSigningVerifier.m */; };
@@ -1072,6 +1073,7 @@
 		722545B72680699D0036465C /* SPUAppcastItemStateResolver+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SPUAppcastItemStateResolver+Private.h"; sourceTree = "<group>"; };
 		722589B51E0A24B9005EA0B9 /* Security.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Security.md; sourceTree = "<group>"; };
 		722589B61E0A24C6005EA0B9 /* Design Practices.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Design Practices.md"; sourceTree = "<group>"; };
+		7225D79E2E541C8A001EF4EC /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		7229E1B51C97C91100CB50D0 /* SPUUpdateDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPUUpdateDriver.h; sourceTree = "<group>"; };
 		7229E1B71C97CC4D00CB50D0 /* SPUScheduledUpdateDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPUScheduledUpdateDriver.h; sourceTree = "<group>"; };
 		7229E1B81C97CC4D00CB50D0 /* SPUScheduledUpdateDriver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPUScheduledUpdateDriver.m; sourceTree = "<group>"; };
@@ -1819,6 +1821,7 @@
 				14732BB91960EEEE00593899 /* SampleAppcast.xml */,
 				1EAA4C8A2132C7BF00604473 /* ReleaseNotesColorStyle.css */,
 				7230BCDD2E22E2BC00B71297 /* Images.xcassets */,
+				7225D79E2E541C8A001EF4EC /* AppIcon.icon */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -3215,6 +3218,7 @@
 				72E45CFC1B641961005C701A /* sparkletestcast.xml in Resources */,
 				725F97A61C8B304D00265BE4 /* SUInstallUpdateViewController.xib in Resources */,
 				723ABE02259A9E9E00BDB4FA /* MainMenu.xib in Resources */,
+				7225D79F2E541C8A001EF4EC /* AppIcon.icon in Resources */,
 				72F0EC45278A55CA002A876A /* screenshot.png in Resources */,
 				72E45CF81B640DAE005C701A /* SUUpdateSettingsWindowController.xib in Resources */,
 			);
