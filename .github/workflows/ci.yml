@@ -16,12 +16,12 @@ jobs:
               xcode-path: '/Applications/Xcode_16.4.app/Contents/Developer'
               upload-dist: true
               run-analyzer: true
-              macos: 'macos-15'
+              macos: 'macos-15-arm64'
             - xcode: 'xcode26'
               xcode-path: '/Applications/Xcode_26.0.app'
               upload-dist: false
               run-analyzer: false
-              macos: 'macos-15'
+              macos: 'macos-15-arm64'
             
     name: Build and Test Sparkle
     runs-on: ${{ matrix.macos }}
