@@ -291,7 +291,9 @@ static const NSTimeInterval SUTerminationTimeDelay = 0.3;
             NSRunningApplication *firstRunningApplication = runningApplications.firstObject;
             
             BOOL targetDead = (firstRunningApplication == nil || firstRunningApplication.terminated);
-            reply(targetDead);
+            if (reply != NULL) {
+                reply(targetDead);
+            }
             
             self->_repliedToRegistration = YES;
             self->_applicationBundle = applicationBundle;
@@ -329,7 +331,9 @@ static const NSTimeInterval SUTerminationTimeDelay = 0.3;
 #endif
         if (self->_targetRunningApplication != nil && self->_terminationCompletionHandler == nil) {
             if (self->_targetRunningApplication.terminated) {
-                completionHandler();
+                if (completionHandler != NULL) {
+                    completionHandler();
+                }
             } else {
                 self->_terminationCompletionHandler = [completionHandler copy];
                 
