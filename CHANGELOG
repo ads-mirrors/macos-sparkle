@@ -18,6 +18,10 @@
 * Workaround a corner case in which the bundle path of a running application contains Contents/MacOS/Executable (#2726, #2747) (Jeremy Huddleston Sequoia, Zorg)
 * Refactor the logic for avoiding re-sending the system profile more frequently than once a week (#2720) (Daniel Jalkut)
 
+# 2.7.2
+
+* Harden policy on what operations clients are allowed to take (#2763) (Zorg)
+
 # 2.7.1
 
 * Fix typo in NN localisation (#2694) (Sjur N Moshagen)
