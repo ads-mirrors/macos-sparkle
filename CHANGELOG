@@ -19,6 +19,10 @@
 * Disable false dependency scan analysis warnings when building Sparkle from source (#2762) (Daniel Jalkut)
 * Refactor the logic for avoiding re-sending the system profile more frequently than once a week (#2720) (Daniel Jalkut)
 
+# 2.7.3
+
+* Double quote team identifiers in requirement strings to fix crash if Team ID starts with number (#2766) (Zorg)
+
 # 2.7.2
 
 * Harden policy on what operations clients are allowed to take (#2763) (Zorg)
