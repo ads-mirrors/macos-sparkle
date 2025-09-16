@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.description = "Sparkle is an easy-to-use software update framework for macOS."
   s.homepage    = "https://sparkle-project.org"
   s.documentation_url = "https://sparkle-project.org/documentation/"
-  s.screenshot  = "https://sparkle-project.org/images/screenshot-noshadow@2x.png"
+  s.screenshot  = "https://sparkle-project.org/images/screenshot-noshadow2.png"
   s.license     = {
     :type => 'MIT',
     :file => 'LICENSE'
