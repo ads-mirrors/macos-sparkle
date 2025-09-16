@@ -12,12 +12,13 @@
   * Set STRINGS_FILE_OUTPUT_ENCODING build setting to "binary" (#2712) (Nicolas Kick)
   * Move all localizations to main Sparkle.strings (#2760) (Zorg)
 * Synchronize updater settings with user defaults to fix out-of-sync UI state (#2728) (Zorg)
-* Document and better enforce main thread only requirement for using Sparkle methods (#2746, #2754) (Sebastien Marchand, Zorg)
+* Document and better enforce main thread only requirement for using Sparkle methods (#2746, #2754, #2768)) (Sebastien Marchand, Zorg)
 * Make -[SPUUserDriver showUpdateInFocus] optional (#2717) (Zorg)
 * Add private module map for framework (#2722) (Zorg)
 * Workaround a corner case in which the bundle path of a running application contains Contents/MacOS/Executable (#2726, #2747) (Jeremy Huddleston Sequoia, Zorg)
 * Disable false dependency scan analysis warnings when building Sparkle from source (#2762) (Daniel Jalkut)
 * Refactor the logic for avoiding re-sending the system profile more frequently than once a week (#2720) (Daniel Jalkut)
+* Remove deprecated interactive package installer type (#2767) (Zorg)
 
 # 2.7.3
 
