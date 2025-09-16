@@ -2,7 +2,7 @@
 
 Secure and reliable software update framework for macOS.
 
-<img src="Resources/Screenshot.png" width="732" alt="Sparkle shows familiar update window with release notes">
+<img src="Resources/Screenshot2.png" width="732" alt="Sparkle shows familiar update window with release notes">
 
 Sparkle 2 adds support for application sandboxing, custom user interfaces, updating external bundles, and a more modern architecture which includes faster and more reliable installs.
 
