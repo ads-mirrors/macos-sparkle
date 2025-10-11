@@ -39,13 +39,13 @@ SUHostDefinitionAttribute
 
 @property (nonatomic, readonly) BOOL hasUpdateSecurityPolicy;
 
-- (nullable id)objectForInfoDictionaryKey:(NSString *)key;
+- (nullable id)objectForInfoDictionaryKey:(NSString *)key ofClass:(Class)aClass;
 - (BOOL)boolForInfoDictionaryKey:(NSString *)key;
-- (nullable id)objectForUserDefaultsKey:(NSString *)defaultName;
+- (nullable id)objectForUserDefaultsKey:(NSString *)defaultName ofClass:(Class)aClass;
 - (void)setObject:(nullable id)value forUserDefaultsKey:(NSString *)defaultName;
 - (BOOL)boolForUserDefaultsKey:(NSString *)defaultName;
 - (void)setBool:(BOOL)value forUserDefaultsKey:(NSString *)defaultName;
-- (nullable id)objectForKey:(NSString *)key;
+- (nullable id)objectForKey:(NSString *)key ofClass:(Class)aClass;
 - (BOOL)boolForKey:(NSString *)key;
 
 - (void)observeChangesFromUserDefaultKeys:(NSSet<NSString *> *)keyPaths changeHandler:(void (^)(NSString *))changeHandler;

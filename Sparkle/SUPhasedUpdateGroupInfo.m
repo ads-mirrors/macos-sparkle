@@ -24,7 +24,7 @@
 
 + (NSNumber*)updateGroupIdentifierForHost:(SUHost*)host SPU_OBJC_DIRECT
 {
-    NSNumber* updateGroupIdentifier = [host objectForUserDefaultsKey:SUUpdateGroupIdentifierKey];
+    NSNumber* updateGroupIdentifier = [host objectForUserDefaultsKey:SUUpdateGroupIdentifierKey ofClass:NSNumber.class];
     if(updateGroupIdentifier == nil) {
         updateGroupIdentifier = [self setNewUpdateGroupIdentifierForHost:host];
     }

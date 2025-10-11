@@ -52,7 +52,7 @@ static void *SUHostObservableContext = &SUHostObservableContext;
 
         NSString *domainIdentifier;
         {
-            NSString *defaultsDomain = [self objectForInfoDictionaryKey:SUDefaultsDomainKey];
+            NSString *defaultsDomain = [self objectForInfoDictionaryKey:SUDefaultsDomainKey ofClass:NSString.class];
             if (defaultsDomain != nil) {
                 domainIdentifier = defaultsDomain;
             } else if (!_isMainBundle) {
@@ -123,13 +123,13 @@ static void *SUHostObservableContext = &SUHostObservableContext;
     NSString *name;
 
     // Allow host bundle to provide a custom name
-    name = [self objectForInfoDictionaryKey:@"SUBundleName"];
+    name = [self objectForInfoDictionaryKey:@"SUBundleName" ofClass:NSString.class];
     if (name && name.length > 0) return name;
 
-    name = [self objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+    name = [self objectForInfoDictionaryKey:@"CFBundleDisplayName" ofClass:NSString.class];
 	if (name && name.length > 0) return name;
 
-    name = [self objectForInfoDictionaryKey:(__bridge NSString *)kCFBundleNameKey];
+    name = [self objectForInfoDictionaryKey:(__bridge NSString *)kCFBundleNameKey ofClass:NSString.class];
 	if (name && name.length > 0) return name;
 
     return [[[NSFileManager defaultManager] displayNameAtPath:[self bundlePath]] stringByDeletingPathExtension];
@@ -147,7 +147,7 @@ static void *SUHostObservableContext = &SUHostObservableContext;
 
 - (NSString * _Nullable)_version SPU_OBJC_DIRECT
 {
-    NSString *version = [self objectForInfoDictionaryKey:(__bridge NSString *)kCFBundleVersionKey];
+    NSString *version = [self objectForInfoDictionaryKey:(__bridge NSString *)kCFBundleVersionKey ofClass:NSString.class];
     return ([self isValidVersion:version] ? version : nil);
 }
 
@@ -164,7 +164,7 @@ static void *SUHostObservableContext = &SUHostObservableContext;
 
 - (NSString * _Nonnull)displayVersion
 {
-    NSString *shortVersionString = [self objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    NSString *shortVersionString = [self objectForInfoDictionaryKey:@"CFBundleShortVersionString" ofClass:NSString.class];
     if (shortVersionString)
         return shortVersionString;
     else
@@ -190,13 +190,13 @@ static void *SUHostObservableContext = &SUHostObservableContext;
 
 - (NSString *_Nullable)publicEDKey SPU_OBJC_DIRECT
 {
-    return [self objectForInfoDictionaryKey:SUPublicEDKeyKey];
+    return [self objectForInfoDictionaryKey:SUPublicEDKeyKey ofClass:NSString.class];
 }
 
 - (NSString *_Nullable)publicDSAKey SPU_OBJC_DIRECT
 {
     // Maybe the key is just a string in the Info.plist.
-    NSString *key = [self objectForInfoDictionaryKey:SUPublicDSAKeyKey];
+    NSString *key = [self objectForInfoDictionaryKey:SUPublicDSAKeyKey ofClass:NSString.class];
 	if (key) {
         return key;
     }
@@ -221,7 +221,7 @@ static void *SUHostObservableContext = &SUHostObservableContext;
 
 - (BOOL)hasUpdateSecurityPolicy
 {
-    NSDictionary<NSString *, id> *updateSecurityPolicy = [self objectForInfoDictionaryKey:@"NSUpdateSecurityPolicy"];
+    NSDictionary<NSString *, id> *updateSecurityPolicy = [self objectForInfoDictionaryKey:@"NSUpdateSecurityPolicy" ofClass:NSDictionary.class];
     
     return (updateSecurityPolicy != nil);
 }
@@ -234,16 +234,17 @@ static void *SUHostObservableContext = &SUHostObservableContext;
 
 - (NSString * _Nullable)publicDSAKeyFileKey
 {
-    return [self objectForInfoDictionaryKey:SUPublicDSAKeyFileKey];
+    return [self objectForInfoDictionaryKey:SUPublicDSAKeyFileKey ofClass:NSString.class];
 }
 
-- (nullable id)objectForInfoDictionaryKey:(NSString *)key
+- (nullable id)objectForInfoDictionaryKey:(NSString *)key ofClass:(Class)aClass
 {
+    id object;
     if (_isMainBundle) {
         // Common fast path - if we're updating the main bundle, that means our updater and host bundle's lifetime is the same
         // If the bundle happens to be updated or change, that means our updater process needs to be terminated first to do it safely
         // Thus we can rely on the cached Info dictionary
-        return [_bundle objectForInfoDictionaryKey:key];
+        object = [_bundle objectForInfoDictionaryKey:key];
     } else {
         // Slow path - if we're updating another bundle, we should read in the most up to date Info dictionary because
         // the bundle can be replaced externally or even by us.
@@ -252,22 +253,44 @@ static void *SUHostObservableContext = &SUHostObservableContext;
         CFDictionaryRef cfInfoDictionary = CFBundleCopyInfoDictionaryInDirectory((CFURLRef)_bundle.bundleURL);
         NSDictionary *infoDictionary = CFBridgingRelease(cfInfoDictionary);
         
-        return [infoDictionary objectForKey:key];
+        object = [infoDictionary objectForKey:key];
     }
+    
+    if (object == nil) {
+        return nil;
+    }
+    
+    if (![(NSObject *)object isKindOfClass:aClass]) {
+        SULog(SULogLevelError, @"Error: Reading info dictionary key %@ with expected class %@ but instead found %@", key, aClass.className, ((NSObject *)object).className);
+        return nil;
+    }
+    
+    return object;
 }
 
 - (BOOL)boolForInfoDictionaryKey:(NSString *)key
 {
-    return [(NSNumber *)[self objectForInfoDictionaryKey:key] boolValue];
+    return [(NSNumber *)[self objectForInfoDictionaryKey:key ofClass:NSNumber.class] boolValue];
 }
 
-- (nullable id)objectForUserDefaultsKey:(NSString *)defaultName
+- (nullable id)objectForUserDefaultsKey:(NSString *)defaultName ofClass:(Class)aClass
 {
     if (defaultName == nil || _userDefaults == nil) {
         return nil;
     }
 
-    return [_userDefaults objectForKey:defaultName];
+    id object = [_userDefaults objectForKey:defaultName];
+    
+    if (object == nil) {
+        return nil;
+    }
+    
+    if (![(NSObject *)object isKindOfClass:aClass]) {
+        SULog(SULogLevelError, @"Error: Reading user defaults key %@ with expected class %@ but instead found %@", defaultName, aClass.className, ((NSObject *)object).className);
+        return nil;
+    }
+    
+    return object;
 }
 
 // Note this handles nil being passed for defaultName, in which case the user default will be removed
@@ -294,12 +317,13 @@ static void *SUHostObservableContext = &SUHostObservableContext;
     [_modifyingKeyPaths removeObject:defaultName];
 }
 
-- (nullable id)objectForKey:(NSString *)key {
-    return [self objectForUserDefaultsKey:key] ? [self objectForUserDefaultsKey:key] : [self objectForInfoDictionaryKey:key];
+- (nullable id)objectForKey:(NSString *)key ofClass:(Class)aClass {
+    id userDefaultsObject = [self objectForUserDefaultsKey:key ofClass:aClass];
+    return userDefaultsObject != nil ? userDefaultsObject : [self objectForInfoDictionaryKey:key ofClass:aClass];
 }
 
 - (BOOL)boolForKey:(NSString *)key {
-    return [self objectForUserDefaultsKey:key] ? [self boolForUserDefaultsKey:key] : [self boolForInfoDictionaryKey:key];
+    return [self objectForUserDefaultsKey:key ofClass:NSNumber.class] != nil ? [self boolForUserDefaultsKey:key] : [self boolForInfoDictionaryKey:key];
 }
 
 @end

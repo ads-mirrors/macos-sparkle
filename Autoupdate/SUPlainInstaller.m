@@ -328,7 +328,7 @@
     
     NSBundle *bundle = [NSBundle bundleWithPath:_bundlePath];
     SUHost *updateHost = [[SUHost alloc] initWithBundle:bundle];
-    NSString *updateVersion = [updateHost objectForInfoDictionaryKey:(__bridge NSString *)kCFBundleVersionKey];
+    NSString *updateVersion = [updateHost objectForInfoDictionaryKey:(__bridge NSString *)kCFBundleVersionKey ofClass:NSString.class];
     
     id<SUVersionComparison> comparator = [[SUStandardVersionComparator alloc] init];
     if (!updateVersion || [comparator compareVersion:hostVersion toVersion:updateVersion] == NSOrderedDescending) {
