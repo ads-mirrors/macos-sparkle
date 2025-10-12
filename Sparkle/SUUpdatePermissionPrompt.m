@@ -80,7 +80,7 @@ static NSString *const SUUpdatePermissionPromptTouchBarIdentifier = @"" SPARKLE_
 
 - (BOOL)allowsAutomaticUpdates
 {
-    NSNumber *allowsAutomaticUpdates = [_host objectForInfoDictionaryKey:SUAllowsAutomaticUpdatesKey ofClass:NSNumber.class];
+    NSNumber *allowsAutomaticUpdates = [_host boolNumberForInfoDictionaryKey:SUAllowsAutomaticUpdatesKey];
     return (allowsAutomaticUpdates == nil || allowsAutomaticUpdates.boolValue);
 }
 

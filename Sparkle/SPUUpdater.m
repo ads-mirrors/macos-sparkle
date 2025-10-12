@@ -400,7 +400,7 @@ NSString *const SUUpdaterAppcastNotificationKey = @"SUUpdaterAppCastNotification
     
     // If the user has been asked about automatic checks or the developer has overridden the setting, don't bother prompting
     // When the user answers to the permission prompt, this will be set to either @YES or @NO instead of nil
-    if ([_host objectForKey:SUEnableAutomaticChecksKey ofClass:NSNumber.class] != nil) {
+    if ([_host boolNumberForKey:SUEnableAutomaticChecksKey] != nil) {
         shouldPrompt = NO;
     }
     // Does the delegate want to take care of the logic for when we should ask permission to update?
@@ -659,7 +659,7 @@ NSString *const SUUpdaterAppcastNotificationKey = @"SUUpdaterAppCastNotification
     
     if (_updatingMainBundle) {
         // Check if Sparkle is configured to ask the user's permission to enable automatic update checks
-        NSNumber *automaticChecksInInfoPlist = [_host objectForInfoDictionaryKey:SUEnableAutomaticChecksKey ofClass:NSNumber.class];
+        NSNumber *automaticChecksInInfoPlist = [_host boolNumberForInfoDictionaryKey:SUEnableAutomaticChecksKey];
         if (automaticChecksInInfoPlist == nil) {
             // Check if automatic update checking is disabled or if the user hasn't given permission for Sparkle to check
             BOOL automaticChecksInDefaults = [self automaticallyChecksForUpdates];

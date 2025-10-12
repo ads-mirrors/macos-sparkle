@@ -237,7 +237,24 @@ static void *SUHostObservableContext = &SUHostObservableContext;
     return [self objectForInfoDictionaryKey:SUPublicDSAKeyFileKey ofClass:NSString.class];
 }
 
-- (nullable id)objectForInfoDictionaryKey:(NSString *)key ofClass:(Class)aClass
+static _Nullable id validateObject(id _Nullable object, NSSet<Class> * classes, NSString *key, NSString *keyType)
+{
+    if (object == nil) {
+        return nil;
+    }
+    
+    for (Class aClass in classes) {
+        if ([(NSObject *)object isKindOfClass:aClass]) {
+            return object;
+        }
+    }
+    
+    SULog(SULogLevelError, @"Error: Reading %@ key %@ with expected classes %@ but instead found %@", keyType, key, classes, ((NSObject *)object).className);
+    
+    return nil;
+}
+
+- (nullable id)objectForInfoDictionaryKey:(NSString *)key ofClasses:(NSSet<Class> *)classes SPU_OBJC_DIRECT
 {
     id object;
     if (_isMainBundle) {
@@ -256,41 +273,82 @@ static void *SUHostObservableContext = &SUHostObservableContext;
         object = [infoDictionary objectForKey:key];
     }
     
+    return validateObject(object, classes, key, @"info dictionary");
+}
+
+- (nullable id)objectForInfoDictionaryKey:(NSString *)key ofClass:(Class)aClass
+{
+    return [self objectForInfoDictionaryKey:key ofClasses:[NSSet setWithObject:aClass]];
+}
+
+static NSNumber * _Nullable convertObjectToBoolNumber(NSObject * _Nullable object, NSString *key, NSString *keyType)
+{
     if (object == nil) {
         return nil;
     }
     
-    if (![(NSObject *)object isKindOfClass:aClass]) {
-        SULog(SULogLevelError, @"Error: Reading info dictionary key %@ with expected class %@ but instead found %@", key, aClass.className, ((NSObject *)object).className);
+    if ([object isKindOfClass:NSNumber.class]) {
+        return (NSNumber *)object;
+    }
+    
+    if ([object isKindOfClass:NSString.class]) {
+        return @(((NSString *)object).boolValue);
+    }
+    
+    SULog(SULogLevelError, @"Error: Reading %@ key %@ expecting convertible bool but instead found class %@", keyType, key, ((NSObject *)object).className);
+    
+    return nil;
+}
+
+static NSNumber * _Nullable convertObjectToDoubleNumber(NSObject * _Nullable object, NSString *key, NSString *keyType)
+{
+    if (object == nil) {
         return nil;
     }
     
-    return object;
+    if ([object isKindOfClass:NSNumber.class]) {
+        return (NSNumber *)object;
+    }
+    
+    if ([object isKindOfClass:NSString.class]) {
+        return @(((NSString *)object).doubleValue);
+    }
+    
+    SULog(SULogLevelError, @"Error: Reading %@ key %@ expecting convertible double but instead found class %@", keyType, key, ((NSObject *)object).className);
+    
+    return nil;
+}
+
+- (nullable NSNumber *)boolNumberForInfoDictionaryKey:(NSString *)key
+{
+    NSObject *object = [self objectForInfoDictionaryKey:key ofClasses:[NSSet setWithArray:@[NSNumber.class, NSString.class]]];
+    return convertObjectToBoolNumber(object, key, @"info dictionary");
 }
 
 - (BOOL)boolForInfoDictionaryKey:(NSString *)key
 {
-    return [(NSNumber *)[self objectForInfoDictionaryKey:key ofClass:NSNumber.class] boolValue];
+    return [[self boolNumberForInfoDictionaryKey:key] boolValue];
 }
 
-- (nullable id)objectForUserDefaultsKey:(NSString *)defaultName ofClass:(Class)aClass
+- (nullable NSNumber *)doubleNumberForInfoDictionaryKey:(NSString *)key
+{
+    NSObject *object = [self objectForInfoDictionaryKey:key ofClasses:[NSSet setWithArray:@[NSNumber.class, NSString.class]]];
+    return convertObjectToDoubleNumber(object, key, @"info dictionary");
+}
+
+- (nullable id)objectForUserDefaultsKey:(NSString *)defaultName ofClasses:(NSSet<Class> *)classes SPU_OBJC_DIRECT
 {
     if (defaultName == nil || _userDefaults == nil) {
         return nil;
     }
 
     id object = [_userDefaults objectForKey:defaultName];
-    
-    if (object == nil) {
-        return nil;
-    }
-    
-    if (![(NSObject *)object isKindOfClass:aClass]) {
-        SULog(SULogLevelError, @"Error: Reading user defaults key %@ with expected class %@ but instead found %@", defaultName, aClass.className, ((NSObject *)object).className);
-        return nil;
-    }
-    
-    return object;
+    return validateObject(object, classes, defaultName, @"user default");
+}
+
+- (nullable id)objectForUserDefaultsKey:(NSString *)defaultName ofClass:(Class)aClass
+{
+    return [self objectForUserDefaultsKey:defaultName ofClasses:[NSSet setWithObject:aClass]];
 }
 
 // Note this handles nil being passed for defaultName, in which case the user default will be removed
@@ -303,9 +361,15 @@ static void *SUHostObservableContext = &SUHostObservableContext;
     [_modifyingKeyPaths removeObject:defaultName];
 }
 
+- (nullable NSNumber *)boolNumberForUserDefaultsKey:(NSString *)key;
+{
+    NSObject *object = [self objectForUserDefaultsKey:key ofClasses:[NSSet setWithArray:@[NSNumber.class, NSString.class]]];
+    return convertObjectToBoolNumber(object, key, @"user default");
+}
+
 - (BOOL)boolForUserDefaultsKey:(NSString *)defaultName
 {
-    return [_userDefaults boolForKey:defaultName];
+    return [[self boolNumberForUserDefaultsKey:defaultName] boolValue];
 }
 
 - (void)setBool:(BOOL)value forUserDefaultsKey:(NSString *)defaultName
@@ -317,13 +381,32 @@ static void *SUHostObservableContext = &SUHostObservableContext;
     [_modifyingKeyPaths removeObject:defaultName];
 }
 
+- (nullable NSNumber *)doubleNumberForUserDefaultsKey:(NSString *)key
+{
+    NSObject *object = [self objectForUserDefaultsKey:key ofClasses:[NSSet setWithArray:@[NSNumber.class, NSString.class]]];
+    return convertObjectToDoubleNumber(object, key, @"user default");
+}
+
 - (nullable id)objectForKey:(NSString *)key ofClass:(Class)aClass {
     id userDefaultsObject = [self objectForUserDefaultsKey:key ofClass:aClass];
     return userDefaultsObject != nil ? userDefaultsObject : [self objectForInfoDictionaryKey:key ofClass:aClass];
 }
 
-- (BOOL)boolForKey:(NSString *)key {
-    return [self objectForUserDefaultsKey:key ofClass:NSNumber.class] != nil ? [self boolForUserDefaultsKey:key] : [self boolForInfoDictionaryKey:key];
+- (nullable NSNumber *)boolNumberForKey:(NSString *)key
+{
+    NSNumber *boolFromUserDefaults = [self boolNumberForUserDefaultsKey:key];
+    return (boolFromUserDefaults != nil) ? boolFromUserDefaults : [self boolNumberForInfoDictionaryKey:key];
+}
+
+- (BOOL)boolForKey:(NSString *)key
+{
+    return [[self boolNumberForKey:key] boolValue];
+}
+
+- (nullable NSNumber *)doubleNumberForKey:(NSString *)key
+{
+    NSNumber *doubleFromUserDefaults = [self doubleNumberForUserDefaultsKey:key];
+    return (doubleFromUserDefaults != nil) ? doubleFromUserDefaults : [self doubleNumberForInfoDictionaryKey:key];
 }
 
 @end

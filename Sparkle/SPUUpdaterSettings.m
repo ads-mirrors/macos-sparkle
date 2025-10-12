@@ -175,7 +175,7 @@ static NSString *SUSendsSystemProfileKeyPath = @"sendsSystemProfile";
 - (NSTimeInterval)currentUpdateCheckInterval SPU_OBJC_DIRECT
 {
     // Find the stored check interval. User defaults override Info.plist.
-    NSNumber *intervalValue = [_host objectForKey:SUScheduledCheckIntervalKey ofClass:NSNumber.class];
+    NSNumber *intervalValue = [_host doubleNumberForKey:SUScheduledCheckIntervalKey];
     if (intervalValue == nil) {
         return SUDefaultUpdateCheckInterval;
     }
@@ -207,7 +207,7 @@ static NSString *SUSendsSystemProfileKeyPath = @"sendsSystemProfile";
 // For allowing automatic downloaded updates to be turned on or off
 - (NSNumber * _Nullable)allowsAutomaticUpdatesOption
 {
-    NSNumber *developerAllowsAutomaticUpdates = [_host objectForInfoDictionaryKey:SUAllowsAutomaticUpdatesKey ofClass:NSNumber.class];
+    NSNumber *developerAllowsAutomaticUpdates = [_host boolNumberForInfoDictionaryKey:SUAllowsAutomaticUpdatesKey];
     return developerAllowsAutomaticUpdates;
 }
 

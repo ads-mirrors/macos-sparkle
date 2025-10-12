@@ -248,7 +248,7 @@ static const CGFloat SUUpdateAlertGroupElementSpacing = 12.0;
 
 - (BOOL)showsReleaseNotes
 {
-    NSNumber *shouldShowReleaseNotes = [_host objectForInfoDictionaryKey:SUShowReleaseNotesKey ofClass:NSNumber.class];
+    NSNumber *shouldShowReleaseNotes = [_host boolNumberForInfoDictionaryKey:SUShowReleaseNotesKey];
     if (shouldShowReleaseNotes == nil) {
         // Don't show release notes if RSS item contains no description and no release notes URL:
         return (([_updateItem itemDescription] != nil
