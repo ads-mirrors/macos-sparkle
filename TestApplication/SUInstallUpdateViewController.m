@@ -96,6 +96,11 @@
     }
 }
 
+- (void)dismissUpdate
+{
+    [self installUpdateLater:nil];
+}
+
 - (IBAction)installUpdate:(id)__unused sender
 {
     if (_reply != nil) {

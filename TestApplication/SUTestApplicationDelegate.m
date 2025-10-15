@@ -15,15 +15,21 @@
 #import "SUPopUpTitlebarUserDriver.h"
 #import "SUBinaryDeltaCreate.h"
 
-@interface SUTestApplicationDelegate () <NSMenuItemValidation, SPUUpdaterDelegate>
+@interface SUTestApplicationDelegate () <NSMenuItemValidation, SPUUpdaterDelegate, SUPopUpTitlebarUserDriverDelegate>
 @end
 
 @implementation SUTestApplicationDelegate
 {
-    SPUUpdater *_updater;
     SUUpdateSettingsWindowController *_updateSettingsWindowController;
     SUTestWebServer *_webServer;
     NSString *_testMode;
+    
+    SPUUpdater *_updater;
+    SUPopUpTitlebarUserDriver *_popUpUserDriver;
+    SUAppcastItem *_presentedUpdateItem;
+    
+    SPUUpdater *_backgroundUpdater;
+    SUPopUpTitlebarUserDriver *_backgroundPopUpUserDriver;
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification * __unused)notification
@@ -164,6 +170,8 @@
                 abort();
             }
             
+            NSLog(@"%@", appcastDestinationURL.path);
+            
             // Update the appcast with the file size and signature of the update archive
             // We could be using some sort of XML parser instead of doing string substitutions, but for now, this is easier
             NSError *appcastError = nil;
@@ -281,18 +289,9 @@
                 NSBundle *hostBundle = [NSBundle mainBundle];
                 NSBundle *applicationBundle = hostBundle;
                 
-                id<SPUUserDriver> userDriver;
-#if SPARKLE_BUILD_UI_BITS
-                if (shiftKeyHeldDown) {
-                    userDriver = [[SUPopUpTitlebarUserDriver alloc] initWithWindow:settingsWindow];
-                } else {
-                    userDriver = [[SPUStandardUserDriver alloc] initWithHostBundle:hostBundle delegate:nil];
-                }
-#else
-                userDriver = [[SUPopUpTitlebarUserDriver alloc] initWithWindow:settingsWindow];
-#endif
+                self->_popUpUserDriver = [[SUPopUpTitlebarUserDriver alloc] initWithWindow:settingsWindow delegate:self];
                 
-                SPUUpdater *updater = [[SPUUpdater alloc] initWithHostBundle:hostBundle applicationBundle:applicationBundle userDriver:userDriver delegate:self];
+                SPUUpdater *updater = [[SPUUpdater alloc] initWithHostBundle:hostBundle applicationBundle:applicationBundle userDriver:self->_popUpUserDriver delegate:self];
                 
                 self->_updater = updater;
                 self->_updateSettingsWindowController.updater = updater;
@@ -356,6 +355,82 @@
         return _updater.canCheckForUpdates;
     }
     return YES;
+}
+
+- (BOOL)userDriver:(SUPopUpTitlebarUserDriver *)userDriver shouldShowFoundUpdate:(SUAppcastItem *)updateItem state:(SPUUserUpdateState *)state
+{
+    if (userDriver == _popUpUserDriver) {
+        _presentedUpdateItem = updateItem;
+        
+        // Start a background updater to check if new updates become available if the user driver holds onto presenting the update for a long period of time
+        // We only do this if the update has not already been downloaded
+        // If the update has already been downloaded but not installed yet (due to requiring auth), trying to disregard the shown update could lead to a worse experience.
+        // If the stage is at SPUUserUpdateStageInstalling, there's nothing we can do. Any background update check will return the same update from the installer agent as long as user hasn't skipped/canceled the update.
+        // If the stage is at SPUUserUpdateStageDownloaded, an update from A -> B and B -> C could be more bandwidth efficient than A -> C if delta updates are used. Note that SPUUserUpdateStageInstalling is more common stage than SPUUserUpdateStageDownloaded (more users don't require authorization).
+        if (_backgroundUpdater == nil && state.stage == SPUUserUpdateStageNotDownloaded) {
+            NSBundle *mainBundle = [NSBundle mainBundle];
+            _backgroundPopUpUserDriver = [[SUPopUpTitlebarUserDriver alloc] initWithWindow:nil delegate:self];
+            
+            _backgroundUpdater = [[SPUUpdater alloc] initWithHostBundle:mainBundle applicationBundle:mainBundle userDriver:_backgroundPopUpUserDriver delegate:self];
+            
+            NSError *backgroundError = nil;
+            if (![_backgroundUpdater startUpdater:&backgroundError]) {
+                NSLog(@"Error: failed to start background updater: %@", backgroundError);
+                [self invalidateBackgroundUpdater];
+            }
+        }
+        
+        return YES;
+    }
+    
+    assert(userDriver == _backgroundPopUpUserDriver && _presentedUpdateItem != nil);
+    if ([updateItem.versionString isEqualToString:_presentedUpdateItem.versionString]) {
+        // Retry again
+        return NO;
+    }
+    
+    [self replaceUpdaterWithBackgroundUpdater];
+    
+    return YES;
+}
+
+- (void)updater:(SPUUpdater *)updater userDidMakeChoice:(SPUUserUpdateChoice)choice forUpdate:(SUAppcastItem *)updateItem state:(SPUUserUpdateState *)state
+{
+    if (updater == _updater) {
+        // User chose an action to dismiss or download/install an update
+        // At this point we no longer need the background updater.
+        [self invalidateBackgroundUpdater];
+    }
+}
+
+- (void)updater:(SPUUpdater *)updater willDownloadUpdate:(SUAppcastItem *)updateItem withRequest:(NSMutableURLRequest *)request
+{
+    if (updater == _backgroundUpdater) {
+        // If the background updater skipped the user driver and started downloading updates automatically (e.g. if the user turned on automaticallyDownloadsUpdates / SUAutomaticallyUpdate),
+        // then use this to-be downloaded update and respect user's choice to try to silently automatically download updates
+        [self replaceUpdaterWithBackgroundUpdater];
+    }
+}
+
+- (void)replaceUpdaterWithBackgroundUpdater
+{
+    _updater = _backgroundUpdater;
+    [_popUpUserDriver dismissPresentedUpdate];
+    _popUpUserDriver = _backgroundPopUpUserDriver;
+    [self invalidateBackgroundUpdater];
+    
+    _popUpUserDriver.window = _updateSettingsWindowController.window;
+    
+    // It's very important that there are no more strong references to the old background updater,
+    // otherwise it may continue running. Here for example we need to update one of our window controller's updater reference.
+    _updateSettingsWindowController.updater = _updater;
+}
+
+- (void)invalidateBackgroundUpdater
+{
+    _backgroundPopUpUserDriver = nil;
+    _backgroundUpdater = nil;
+    _presentedUpdateItem = nil;
 }
 
 @end

@@ -15,4 +15,6 @@ SPU_OBJC_DIRECT_MEMBERS @interface SUInstallUpdateViewController : NSViewControl
 
 - (void)showReleaseNotesWithDownloadData:(SPUDownloadData *)downloadData;
 
+- (void)dismissUpdate;
+
 @end

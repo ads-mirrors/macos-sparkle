@@ -18,6 +18,7 @@
     SUInstallUpdateViewController *_installUpdateViewController;
     NSTitlebarAccessoryViewController *_accessoryViewController;
     NSButton *_updateButton;
+    __weak id<SUPopUpTitlebarUserDriverDelegate> _delegate;
     
     uint64_t _expectedContentLength;
     uint64_t _contentLengthDownloaded;
@@ -25,11 +26,14 @@
     BOOL _addedAccessory;
 }
 
-- (instancetype)initWithWindow:(NSWindow *)window
+@synthesize window = _window;
+
+- (instancetype)initWithWindow:(nullable NSWindow *)window delegate:(id<SUPopUpTitlebarUserDriverDelegate>)delegate
 {
     self = [super init];
     if (self != nil) {
         _window = window;
+        _delegate = delegate;
     }
     return self;
 }
@@ -128,8 +132,22 @@
     }];
 }
 
+- (void)dismissPresentedUpdate
+{
+    [self removeUpdateButton];
+    
+    [_installUpdateViewController dismissUpdate];
+    _installUpdateViewController = nil;
+}
+
 - (void)showUpdateFoundWithAppcastItem:(SUAppcastItem *)appcastItem state:(SPUUserUpdateState *)state reply:(void (^)(SPUUserUpdateChoice))reply
 {
+    id<SUPopUpTitlebarUserDriverDelegate> delegate = _delegate;
+    if (delegate != nil && ![delegate userDriver:self shouldShowFoundUpdate:appcastItem state:state]) {
+        reply(SPUUserUpdateChoiceDismiss);
+        return;
+    }
+    
     if (appcastItem.informationOnlyUpdate) {
         // Todo: show user interface for this
         NSLog(@"Found info URL: %@", appcastItem.infoURL);
