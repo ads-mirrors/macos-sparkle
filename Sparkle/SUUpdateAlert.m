@@ -248,7 +248,7 @@ static const CGFloat SUUpdateAlertGroupElementSpacing = 12.0;
 
 - (BOOL)showsReleaseNotes
 {
-    NSNumber *shouldShowReleaseNotes = [_host objectForInfoDictionaryKey:SUShowReleaseNotesKey];
+    NSNumber *shouldShowReleaseNotes = [_host boolNumberForInfoDictionaryKey:SUShowReleaseNotesKey];
     if (shouldShowReleaseNotes == nil) {
         // Don't show release notes if RSS item contains no description and no release notes URL:
         return (([_updateItem itemDescription] != nil
@@ -284,9 +284,9 @@ static const CGFloat SUUpdateAlertGroupElementSpacing = 12.0;
     NSArray<NSString *> *customAllowedURLSchemes;
     {
         NSMutableArray<NSString *> *allowedSchemes = [NSMutableArray array];
-        id hostAllowedURLSchemes = [_host objectForInfoDictionaryKey:SUAllowedURLSchemesKey];
-        if ([(NSObject *)hostAllowedURLSchemes isKindOfClass:[NSArray class]]) {
-            for (id urlScheme in (NSArray *)hostAllowedURLSchemes) {
+        NSArray *hostAllowedURLSchemes = [_host objectForInfoDictionaryKey:SUAllowedURLSchemesKey ofClass:NSArray.class];
+        if (hostAllowedURLSchemes != nil) {
+            for (id urlScheme in hostAllowedURLSchemes) {
                 if ([(NSObject *)urlScheme isKindOfClass:[NSString class]]) {
                     NSString *allowedURLScheme = [(NSString *)urlScheme lowercaseString];
                     if (![allowedURLScheme isEqualToString:@"file"]) {

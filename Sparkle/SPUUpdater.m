@@ -187,7 +187,7 @@ NSString *const SUUpdaterAppcastNotificationKey = @"SUUpdaterAppCastNotification
         // We perform this check one runloop cycle after starting the updater to give the developer
         // a chance to call -clearFeedURLFromUserDefaults before this warning can show up
         if (self->_updatingMainBundle) {
-            NSString *appcastUserDefaultsString = [self->_host objectForUserDefaultsKey:SUFeedURLKey];
+            NSString *appcastUserDefaultsString = [self->_host objectForUserDefaultsKey:SUFeedURLKey ofClass:NSString.class];
             if (appcastUserDefaultsString != nil) {
                 SULog(SULogLevelError, @"Warning: A feed URL was found stored in user defaults for %@. This was likely set using -[SPUUpdater setFeedURL:] which is deprecated. Please migrate away from using this API and call -[SPUUpdater clearFeedURLFromUserDefaults] to remove any stored defaults, otherwise Sparkle may continue to use the feed stored from the defaults. If the feed url was set via a defaults write command for testing purposes, then please ignore this warning.", self->_host.name);
             }
@@ -307,7 +307,7 @@ NSString *const SUUpdaterAppcastNotificationKey = @"SUUpdaterAppCastNotification
             
             BOOL foundATSMainBundleIssue = NO;
             if (!foundATSPersistentIssue && !foundXPCDownloaderService) {
-                BOOL foundATSIssue = ([mainBundleHost objectForInfoDictionaryKey:@"NSAppTransportSecurity"] == nil);
+                BOOL foundATSIssue = ([mainBundleHost objectForInfoDictionaryKey:@"NSAppTransportSecurity" ofClass:NSDictionary.class] == nil);
                 
                 if (_updatingMainBundle) {
                     // The only way we'll know for sure if there is an issue is if the main bundle is the same as the one we're updating
@@ -400,7 +400,7 @@ NSString *const SUUpdaterAppcastNotificationKey = @"SUUpdaterAppCastNotification
     
     // If the user has been asked about automatic checks or the developer has overridden the setting, don't bother prompting
     // When the user answers to the permission prompt, this will be set to either @YES or @NO instead of nil
-    if ([_host objectForKey:SUEnableAutomaticChecksKey] != nil) {
+    if ([_host boolNumberForKey:SUEnableAutomaticChecksKey] != nil) {
         shouldPrompt = NO;
     }
     // Does the delegate want to take care of the logic for when we should ask permission to update?
@@ -480,7 +480,7 @@ NSString *const SUUpdaterAppcastNotificationKey = @"SUUpdaterAppCastNotification
     
     if (_updateLastCheckedDate == nil)
     {
-        _updateLastCheckedDate = [_host objectForUserDefaultsKey:SULastCheckTimeKey];
+        _updateLastCheckedDate = [_host objectForUserDefaultsKey:SULastCheckTimeKey ofClass:NSDate.class];
     }
     
     return _updateLastCheckedDate;
@@ -659,7 +659,7 @@ NSString *const SUUpdaterAppcastNotificationKey = @"SUUpdaterAppCastNotification
     
     if (_updatingMainBundle) {
         // Check if Sparkle is configured to ask the user's permission to enable automatic update checks
-        NSNumber *automaticChecksInInfoPlist = [_host objectForInfoDictionaryKey:SUEnableAutomaticChecksKey];
+        NSNumber *automaticChecksInInfoPlist = [_host boolNumberForInfoDictionaryKey:SUEnableAutomaticChecksKey];
         if (automaticChecksInInfoPlist == nil) {
             // Check if automatic update checking is disabled or if the user hasn't given permission for Sparkle to check
             BOOL automaticChecksInDefaults = [self automaticallyChecksForUpdates];
@@ -1080,7 +1080,7 @@ NSString *const SUUpdaterAppcastNotificationKey = @"SUUpdaterAppCastNotification
         SULog(SULogLevelError, @"Error: -[SPUUpdater clearFeedURLFromUserDefaults] must be called on the main thread.");
     }
     
-    NSString *appcastString = [_host objectForUserDefaultsKey:SUFeedURLKey];
+    NSString *appcastString = [_host objectForUserDefaultsKey:SUFeedURLKey ofClass:NSString.class];
     
     [_host setObject:nil forUserDefaultsKey:SUFeedURLKey];
     
@@ -1124,7 +1124,7 @@ NSString *const SUUpdaterAppcastNotificationKey = @"SUUpdaterAppCastNotification
     }
     
     // Delegate gets first priority for determining the feed URL
-    NSString *appcastString = [_host objectForKey:SUFeedURLKey];
+    NSString *appcastString = [_host objectForKey:SUFeedURLKey ofClass:NSString.class];
     id<SPUUpdaterDelegate> delegate = _delegate;
     if ([delegate respondsToSelector:@selector((feedURLStringForUpdater:))]) {
         NSString *delegateAppcastString = [delegate feedURLStringForUpdater:self];
@@ -1136,7 +1136,7 @@ NSString *const SUUpdaterAppcastNotificationKey = @"SUUpdaterAppCastNotification
     // A value in the user defaults overrides one in the Info.plist
     // (as this used to be used for setting alternative feed URLs but is now deprecated)
     if (appcastString == nil) {
-        appcastString = [_host objectForKey:SUFeedURLKey];
+        appcastString = [_host objectForKey:SUFeedURLKey ofClass:NSString.class];
     }
     
     if (appcastString == nil) { // Can't find an appcast string!
@@ -1222,7 +1222,7 @@ static NSString *escapeURLComponent(NSString *str) {
 
     // Let's only send the system profiling information once per week at most, so we normalize daily-checkers vs. biweekly-checkers and the such.
     if (sendingSystemProfile) {
-        NSDate *lastSubmitDate = [_host objectForUserDefaultsKey:SULastProfileSubmitDateKey];
+        NSDate *lastSubmitDate = [_host objectForUserDefaultsKey:SULastProfileSubmitDateKey ofClass:NSDate.class];
         if (!lastSubmitDate) {
             lastSubmitDate = [NSDate distantPast];
         }
