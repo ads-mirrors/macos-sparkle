@@ -443,30 +443,16 @@ finally:
     return (resultError == nil);
 }
 
-+ (SUValidateConnectionStatus)validateConnection:(NSXPCConnection *)connection options:(SUValidateConnectionOptions)options error:(NSError * __autoreleasing *)error
++ (SUValidateConnectionStatus)validateConnection:(NSXPCConnection *)connection error:(NSError * __autoreleasing *)error
 {
-    NSMutableArray<NSString *> *codeSigningRequirementComponents = [NSMutableArray array];
-    
-    // Build the default team ID signing requirement
+    // Check if code signing requirement is required
     NSString *hostTeamIdentifier = [self teamIdentifierFromMainExecutable];
-    if (hostTeamIdentifier != nil) {
-        NSString *teamIdentifierRequirement = [NSString stringWithFormat:@"(anchor apple generic and certificate leaf[subject.OU] = \"%@\")", hostTeamIdentifier];
-        [codeSigningRequirementComponents addObject:teamIdentifierRequirement];
-    }
-    
-    // Build the sandboxing requirement
-    if ((options & SUValidateConnectionOptionRequireSandboxEntitlement) != 0) {
-        // This ensures the entitlement is set to true too
-        NSString *sandboxingRequirement = @"(entitlement [\"com.apple.security.app-sandbox\"] exists)";
-        [codeSigningRequirementComponents addObject:sandboxingRequirement];
-    }
-    
-    // Check if no requirement is required
-    if (codeSigningRequirementComponents.count == 0) {
+    if (hostTeamIdentifier == nil) {
         return SUValidateConnectionStatusSetNoRequirementSuccess;
     }
     
-    NSString *codeSigningRequirement = [codeSigningRequirementComponents componentsJoinedByString:@" and "];
+    // Build the default team ID signing requirement
+    NSString *codeSigningRequirement = [NSString stringWithFormat:@"(anchor apple generic and certificate leaf[subject.OU] = \"%@\")", hostTeamIdentifier];
     
     if (@available(macOS 13.0, *)) {
         [connection setCodeSigningRequirement:codeSigningRequirement];

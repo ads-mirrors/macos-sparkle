@@ -147,7 +147,7 @@ static const NSTimeInterval SUDisplayProgressTimeDelay = 0.7;
         if (!_performedStage1Installation) {
             BOOL passesValidation;
             NSError *validationError = nil;
-            SUValidateConnectionStatus status = [SUCodeSigningVerifier validateConnection:newConnection options:SUValidateConnectionOptionDefault error:&validationError];
+            SUValidateConnectionStatus status = [SUCodeSigningVerifier validateConnection:newConnection error:&validationError];
             switch (status) {
                 case SUValidateConnectionStatusSetCodeSigningRequirementSuccess:
                     passesValidation = YES;

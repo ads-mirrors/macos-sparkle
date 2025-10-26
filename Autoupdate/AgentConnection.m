@@ -71,7 +71,7 @@
     
     // Hardening but not critical for security
     NSError *validationError = nil;
-    SUValidateConnectionStatus validationStatus = [SUCodeSigningVerifier validateConnection:newConnection options:SUValidateConnectionOptionDefault error:&validationError];
+    SUValidateConnectionStatus validationStatus = [SUCodeSigningVerifier validateConnection:newConnection error:&validationError];
     switch (validationStatus) {
         case SUValidateConnectionStatusSetCodeSigningRequirementSuccess:
             break;
